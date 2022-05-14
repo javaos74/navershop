@@ -1,0 +1,593 @@
+<Activity mc:Ignorable="sap sap2010" x:Class="SearchAndGetWithChrome" xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities" xmlns:d="clr-namespace:Damerau_Levenshtein_Distance_Library;assembly=Damerau-Levenshtein Distance Library" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:mva="clr-namespace:Microsoft.VisualBasic.Activities;assembly=System.Activities" xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation" xmlns:sap2010="http://schemas.microsoft.com/netfx/2010/xaml/activities/presentation" xmlns:sc="clr-namespace:System.ComponentModel;assembly=System" xmlns:scg="clr-namespace:System.Collections.Generic;assembly=mscorlib" xmlns:sd="clr-namespace:System.Data;assembly=System.Data" xmlns:ui="http://schemas.uipath.com/workflow/activities" xmlns:uix="http://schemas.uipath.com/workflow/activities/uix" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+  <x:Members>
+    <x:Property Name="in_Config" Type="InArgument(scg:Dictionary(x:String, x:Object))" />
+    <x:Property Name="in_QueueItem" Type="InArgument(ui:QueueItem)" />
+    <x:Property Name="out_Link" Type="OutArgument(x:String)" />
+    <x:Property Name="out_Price" Type="OutArgument(x:String)" />
+    <x:Property Name="io_Count" Type="InOutArgument(x:Int32)" />
+  </x:Members>
+  <mva:VisualBasic.Settings>
+    <x:Null />
+  </mva:VisualBasic.Settings>
+  <sap:VirtualizedContainerService.HintSize>1413,7477</sap:VirtualizedContainerService.HintSize>
+  <sap2010:WorkflowViewState.IdRef>SearchAndGetWithChrome_1</sap2010:WorkflowViewState.IdRef>
+  <TextExpression.NamespacesForImplementation>
+    <scg:List x:TypeArguments="x:String" Capacity="76">
+      <x:String>System.Activities</x:String>
+      <x:String>System.Activities.Statements</x:String>
+      <x:String>System.Activities.Expressions</x:String>
+      <x:String>System.Activities.Validation</x:String>
+      <x:String>System.Activities.XamlIntegration</x:String>
+      <x:String>Microsoft.VisualBasic</x:String>
+      <x:String>Microsoft.VisualBasic.Activities</x:String>
+      <x:String>System</x:String>
+      <x:String>System.Collections</x:String>
+      <x:String>System.Collections.Generic</x:String>
+      <x:String>System.Data</x:String>
+      <x:String>System.Diagnostics</x:String>
+      <x:String>System.Drawing</x:String>
+      <x:String>System.IO</x:String>
+      <x:String>System.Linq</x:String>
+      <x:String>System.Net.Mail</x:String>
+      <x:String>System.Xml</x:String>
+      <x:String>System.Xml.Linq</x:String>
+      <x:String>UiPath.Core</x:String>
+      <x:String>UiPath.Core.Activities</x:String>
+      <x:String>System.Windows.Markup</x:String>
+      <x:String>UiPath.UIAutomationCore.Contracts</x:String>
+      <x:String>System.ComponentModel</x:String>
+      <x:String>System.Runtime.Serialization</x:String>
+      <x:String>System.Xml.Serialization</x:String>
+      <x:String>System.Collections.ObjectModel</x:String>
+      <x:String>UiPath.UIAutomationNext.Enums</x:String>
+      <x:String>System.Security</x:String>
+      <x:String>UiPath.UIAutomationNext.Contracts</x:String>
+      <x:String>UiPath.UIAutomationNext.Activities.Models</x:String>
+      <x:String>UiPath.UIAutomationNext.Models.ExtractData</x:String>
+      <x:String>UiPath.DataTableUtilities</x:String>
+      <x:String>System.Reflection</x:String>
+      <x:String>System.Runtime.InteropServices</x:String>
+      <x:String>System.Activities.DynamicUpdate</x:String>
+      <x:String>UiPath.UIAutomationNext.Activities</x:String>
+      <x:String>UiPath.Platform.ObjectLibrary</x:String>
+      <x:String>UiPath.Shared.Activities</x:String>
+      <x:String>Damerau_Levenshtein_Distance_Library</x:String>
+    </scg:List>
+  </TextExpression.NamespacesForImplementation>
+  <TextExpression.ReferencesForImplementation>
+    <scg:List x:TypeArguments="AssemblyReference" Capacity="62">
+      <AssemblyReference>System.Activities</AssemblyReference>
+      <AssemblyReference>Microsoft.VisualBasic</AssemblyReference>
+      <AssemblyReference>mscorlib</AssemblyReference>
+      <AssemblyReference>System.Data</AssemblyReference>
+      <AssemblyReference>System.Data.DataSetExtensions</AssemblyReference>
+      <AssemblyReference>System</AssemblyReference>
+      <AssemblyReference>System.Drawing</AssemblyReference>
+      <AssemblyReference>System.Core</AssemblyReference>
+      <AssemblyReference>System.Xml</AssemblyReference>
+      <AssemblyReference>System.Xml.Linq</AssemblyReference>
+      <AssemblyReference>PresentationFramework</AssemblyReference>
+      <AssemblyReference>WindowsBase</AssemblyReference>
+      <AssemblyReference>PresentationCore</AssemblyReference>
+      <AssemblyReference>System.Xaml</AssemblyReference>
+      <AssemblyReference>UiPath.System.Activities</AssemblyReference>
+      <AssemblyReference>UiPath.UiAutomation.Activities</AssemblyReference>
+      <AssemblyReference>UiPath.UIAutomationCore</AssemblyReference>
+      <AssemblyReference>System.Runtime.Serialization</AssemblyReference>
+      <AssemblyReference>UiPath.UIAutomationNext</AssemblyReference>
+      <AssemblyReference>UiPath.UIAutomationNext.Activities</AssemblyReference>
+      <AssemblyReference>System.Reflection.Metadata</AssemblyReference>
+      <AssemblyReference>System.Memory</AssemblyReference>
+      <AssemblyReference>UiPath.Platform</AssemblyReference>
+      <AssemblyReference>UiPath.Excel.Activities</AssemblyReference>
+      <AssemblyReference>UiPath.OCR.Activities</AssemblyReference>
+      <AssemblyReference>System.ServiceModel</AssemblyReference>
+      <AssemblyReference>Microsoft.Bcl.AsyncInterfaces</AssemblyReference>
+      <AssemblyReference>System.ValueTuple</AssemblyReference>
+      <AssemblyReference>System.ComponentModel.Composition</AssemblyReference>
+      <AssemblyReference>NPOI</AssemblyReference>
+      <AssemblyReference>UiPath.System.Activities.Design</AssemblyReference>
+      <AssemblyReference>Damerau-Levenshtein Distance Library</AssemblyReference>
+      <AssemblyReference>System.Runtime.WindowsRuntime</AssemblyReference>
+    </scg:List>
+  </TextExpression.ReferencesForImplementation>
+  <Sequence DisplayName="SearchAndGetWithChrome" sap:VirtualizedContainerService.HintSize="1423,7412" sap2010:WorkflowViewState.IdRef="Sequence_1">
+    <Sequence.Variables>
+      <Variable x:TypeArguments="x:String" Name="link" />
+      <Variable x:TypeArguments="x:String" Name="price" />
+      <Variable x:TypeArguments="x:String" Name="product_name" />
+      <Variable x:TypeArguments="ui:UiElement" Name="brower" />
+    </Sequence.Variables>
+    <sap:WorkflowViewStateService.ViewState>
+      <scg:Dictionary x:TypeArguments="x:String, x:Object">
+        <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+      </scg:Dictionary>
+    </sap:WorkflowViewStateService.ViewState>
+    <ui:MultipleAssign DisplayName="Multiple Assign" sap:VirtualizedContainerService.HintSize="1381,162" sap2010:WorkflowViewState.IdRef="MultipleAssign_1">
+      <ui:MultipleAssign.AssignOperations>
+        <scg:List x:TypeArguments="ui:AssignOperation" Capacity="4">
+          <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_1">
+            <ui:AssignOperation.To>
+              <OutArgument x:TypeArguments="x:String">[price]</OutArgument>
+            </ui:AssignOperation.To>
+            <ui:AssignOperation.Value>
+              <InArgument x:TypeArguments="x:String">
+                <Literal x:TypeArguments="x:String" Value="" />
+              </InArgument>
+            </ui:AssignOperation.Value>
+          </ui:AssignOperation>
+          <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_2">
+            <ui:AssignOperation.To>
+              <OutArgument x:TypeArguments="x:String">[link]</OutArgument>
+            </ui:AssignOperation.To>
+            <ui:AssignOperation.Value>
+              <InArgument x:TypeArguments="x:String">
+                <Literal x:TypeArguments="x:String" Value="" />
+              </InArgument>
+            </ui:AssignOperation.Value>
+          </ui:AssignOperation>
+          <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_13">
+            <ui:AssignOperation.To>
+              <OutArgument x:TypeArguments="x:String">[product_name]</OutArgument>
+            </ui:AssignOperation.To>
+            <ui:AssignOperation.Value>
+              <InArgument x:TypeArguments="x:String">[in_QueueItem.SpecificContent("name").ToString.Replace("]", string.Empty).ToString.Replace("[", string.Empty).ToUpper().Trim]</InArgument>
+            </ui:AssignOperation.Value>
+          </ui:AssignOperation>
+        </scg:List>
+      </ui:MultipleAssign.AssignOperations>
+    </ui:MultipleAssign>
+    <uix:NApplicationCard WebDriverMode="{x:Null}" AttachMode="ByInstance" CloseMode="Never" DisplayName="Use Browser Chrome: 네이버쇼핑" sap:VirtualizedContainerService.HintSize="1381,7118" sap2010:WorkflowViewState.IdRef="NApplicationCard_1" InteractionMode="DebuggerApi" OpenMode="IfNotOpen" OutUiElement="[brower]" ScopeGuid="6a5c804e-2fbe-4e58-91f3-f132cdbd182c" Version="V1">
+      <uix:NApplicationCard.Body>
+        <ActivityAction x:TypeArguments="x:Object">
+          <ActivityAction.Argument>
+            <DelegateInArgument x:TypeArguments="x:Object" Name="WSSessionData" />
+          </ActivityAction.Argument>
+          <Sequence DisplayName="실행" sap:VirtualizedContainerService.HintSize="1347,6901" sap2010:WorkflowViewState.IdRef="Sequence_13">
+            <Sequence.Variables>
+              <Variable x:TypeArguments="x:String" Name="price_diff_count" />
+            </Sequence.Variables>
+            <sap:WorkflowViewStateService.ViewState>
+              <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+              </scg:Dictionary>
+            </sap:WorkflowViewStateService.ViewState>
+            <uix:NTypeInto ActivateBefore="True" ClickBeforeMode="Single" DisplayName="Type Into '자동완성 펼치기 자동완성 펼치기 네이버 검색'" EmptyFieldMode="SingleLine" sap:VirtualizedContainerService.HintSize="1305,218" sap2010:WorkflowViewState.IdRef="NTypeInto_1" ScopeIdentifier="6a5c804e-2fbe-4e58-91f3-f132cdbd182c" Text="[product_name]" Version="V1">
+              <uix:NTypeInto.Target>
+                <uix:TargetAnchorable BrowserURL="https://shopping.naver.com/home/p/index.naver" DesignTimeRectangle="248, 140, 223, 18" ElementType="InputBox" FriendlyName="'INPUT'" FullSelectorArgument="&lt;webctrl name='query' tag='INPUT' type='text' /&gt;" FuzzySelectorArgument="&lt;webctrl name='query' tag='INPUT' type='text' aaname='검색어 입력' /&gt;" Guid="33437657-3467-4552-affb-0c41f3f104d0" ImageBase64="iVBORw0KGgoAAAANSUhEUgAAAOMAAAAWCAYAAAAy0SvmAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAABcSURBVHhe7dMxAQAgEAAhcxjFRt8/gMbwBgYisPaZC/wnI0TICBEyQoSMECEjRMgIETJChIwQISNEyAgRMkKEjBAhI0TICBEyQoSMECEjRMgIETJChIwQISMkzH2SNtdoAQHrZAAAAABJRU5ErkJggg==" InformativeScreenshot="aa45ba8e03f26efe451620872282c51f.png" ScopeSelectorArgument="&lt;html app='chrome.exe' title='네이버쇼핑' /&gt;" SearchSteps="FuzzySelector, Image">
+                  <uix:TargetAnchorable.Anchors>
+                    <scg:List x:TypeArguments="uix:ITarget" Capacity="1">
+                      <uix:Target DesignTimeRectangle="237, 132, 305, 34" FriendlyName="'자동완성 펼치기 자동완성 펼치기 네이버 검색'" FullSelectorArgument="&lt;webctrl id='autocompleteWrapper' tag='DIV' /&gt;" FuzzySelectorArgument="&lt;webctrl id='autocompleteWrapper' tag='DIV' type='' aaname=' &amp;#x9;&amp;#x9;&amp;#x9;&amp;#x9;&amp;#x9;&amp;#x9;&amp;#x9; &amp;#x9;&amp;#x9;&amp;#x9;&amp;#x9;&amp;#x9;&amp;#x9;&amp;#x9; &amp;#x9;&amp;#x9;&amp;#x9;&amp;#x9;&amp;#x9;&amp;#x9;&amp;#x9;  &amp;#x9;&amp;#x9;&amp;#x9;&amp;#x9;&amp;#x9;&amp;#x9;&amp;#x9; &amp;#x9;&amp;#x9;&amp;#x9;&amp;#x9;&amp;#x9;&amp;#x9;&amp;#x9; &amp;#x9;&amp;#x9;&amp;#x9;&amp;#x9;&amp;#x9;&amp;#x9;&amp;#x9; &amp;#x9;&amp;#x9;&amp;#x9;&amp;#x9;&amp;#x9;&amp;#x9;&amp;#x9; &amp;#x9;&amp;#x9;&amp;#x9;&amp;#x9;&amp;#x9;&amp;#x9;&amp;#x9; &amp;#x9;&amp;#x9;&amp;#x9;&amp;#x9;&amp;#x9;&amp;#x9;&amp;#x9; &amp;#x9;&amp;#x9;&amp;#x9;&amp;#x9;&amp;#x9;&amp;#x9;&amp;#x9; &amp;#x9;&amp;#x9;&amp;#x9;&amp;#x9;&amp;#x9;&amp;#x9;&amp;#x9; &amp;#x9;&amp;#x9;&amp;#x9;&amp;#x9;&amp;#x9;&amp;#x9;&amp;#x9; &amp;#x9;&amp;#x9;&amp;#x9;&amp;#x9;&amp;#x9;&amp;#x9;' check:text='자동완성 펼치기&amp;#xD;&amp;#xA;&amp;#x9;&amp;#x9;&amp;#x9;&amp;#x9;&amp;#x9;&amp;#x9;&amp;#x9;&amp;#xD;&amp;#xA;&amp;#x9;&amp;#x9;&amp;#x9;&amp;#x9;&amp;#x9;&amp;#x9;&amp;#x9;&amp;#xD;&amp;#xA;&amp;#x9;&amp;#x9;&amp;#x9;&amp;#x9;&amp;#x9;&amp;#x9;&amp;#x9;&amp;#xD;&amp;#xA;&amp;#x9;&amp;#x9;&amp;#x9;&amp;#x9;&amp;#x9;&amp;#x9;&amp;#x9;&amp;#x9;&amp;#xD;&amp;#xA;&amp;#x9;&amp;#x9;&amp;#x9;&amp;#x9;&amp;#x9;&amp;#x9;&amp;#x9;&amp;#x9;자동완성 펼치기&amp;#xD;&amp;#xA;&amp;#x9;&amp;#x9;&amp;#x9;&amp;#x9;&amp;#x9;&amp;#x9;&amp;#x9;&amp;#xD;&amp;#xA;&amp;#x9;&amp;#x9;&amp;#x9;&amp;#x9;&amp;#x9;&amp;#x9;&amp;#x9;&amp;#xD;&amp;#xA;&amp;#x9;&amp;#x9;&amp;#x9;&amp;#x9;&amp;#x9;&amp;#x9;&amp;#x9;네이버 검색&amp;#xD;&amp;#xA;&amp;#x9;&amp;#x9;&amp;#x9;&amp;#x9;&amp;#x9;&amp;#x9;&amp;#x9;&amp;#xD;&amp;#xA;&amp;#x9;&amp;#x9;' /&gt;" ImageBase64="iVBORw0KGgoAAAANSUhEUgAAATUAAAAmCAYAAAClKgyFAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAH+SURBVHhe7d2xahRRFIDhFcHW3heJ2SSrNr6ET+BT+AomxpjG3k4sdidY2fgAImwU7KxFLMRyvLPZgQSOMZ4s3Ct8Ax/zBj/nMHNnJnemj3uAGra7/ZW7i6flfnDB9OTZ2X1xeLn5Ub+zeNHvrYkaUM0YtTMXozYKQ3bOELQxarslcKIGVDNZbG3MELVZdyxqQD2Tzw82Yx016ydQVRiojHXUrJ9AVWGgMkrUhtXTpAZUFQYqo0RtfFggakA1YaAyRA1oQRioDFEDWhAGKkPUgBaEgcoQNaAFYaAyStSG41Je6QCqCgOVsY6aSQ2oKgxUhvUTaEEYqAxRA1oQBipD1IAWhIHKKFEbgiZqQFVhoDJEDWhBGKgMUQNaEAYqQ9SAFoSByhA1oAVhoDLWUZvNRQ2oaPLpfhypf2VSA1pwY7m7mbCVqA3nPkUNqOrltzf9zeXe9cNmUgNaMFyvvr/tby1L1K4TNpMa0IKPv76swvb6x7t+cjqLg3UVoga04Pbpw/79zw/9o69PyqR2Lw7WVVg/gRasQjZMaKugWT+B/1wYqAyTGtCCMFAZJWrTuZ8ZA5WFgcoQNaAFYaAyStR8JBKoLgxUhqgBLQgDlSFqQAuGGG2KqAHVbXf7xcGldrrn/XRx+Gfzo1XQRA2obuvk71GLQjaEbnQ+arPuuP8NbSnylPUhbhwAAAAASUVORK5CYII=" SearchSteps="FuzzySelector, Image" />
+                    </scg:List>
+                  </uix:TargetAnchorable.Anchors>
+                </uix:TargetAnchorable>
+              </uix:NTypeInto.Target>
+            </uix:NTypeInto>
+            <uix:NClick ClickType="Single" DisplayName="Click '네이버 검색'" sap:VirtualizedContainerService.HintSize="1305,157" sap2010:WorkflowViewState.IdRef="NClick_1" KeyModifiers="None" MouseButton="Left" ScopeIdentifier="6a5c804e-2fbe-4e58-91f3-f132cdbd182c" Version="V1">
+              <uix:NClick.Target>
+                <uix:TargetAnchorable BrowserURL="https://shopping.naver.com/home/p/index.naver" DesignTimeRectangle="492, 132, 50, 34" ElementType="Text" FriendlyName="'네이버 검색'" FullSelectorArgument="&lt;webctrl aaname='네이버 검색' parentid='autocompleteWrapper' tag='A' /&gt;" FuzzySelectorArgument="&lt;webctrl aaname='네이버 검색' parentid='autocompleteWrapper' tag='A' type='' check:text='네이버 검색' /&gt;" Guid="56a1bf6e-cd5a-40de-8680-c1eabfea853a" ImageBase64="iVBORw0KGgoAAAANSUhEUgAAADYAAAAmCAYAAACPk2hGAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAP4SURBVGhD7ZlbSFRBGIA3oqiQ6iVf8qGHgl6CwFveNtOKrkoQgVQQRRAUREUUJAXRS1rmLRXCp4gkoghy13qoKIQgkERzL6hrira6mve87Lp////PObaus7rqbOjWLB9nzzlzZs93/v/MDDuG6Kq7QMS8yRFbJBa/x5hzAxJbdW8a4tx9/J7HxJnzEdrq0H4+nhPo+wnmgkl2mGi/cAqJVUViayqemcoSSDKVQoqGVIzxk/ElkJguJZi7mGCqmI5UxgeS0sWSUdJgMMVDOEFiRnMZGEArfMK2a2mjiXEqal5hJcapqHmFjRilYVhGTO9A/ostCUIrlgoGqxEMDclIEhi+IbSlfQsep/PS6xQQGjES2gmrG9LgfHsOvBv8Av2eIW57cGIYPg7VwOWOBxBhSRfioRBUL4Y3idEwNp+DtvFObs+Ln/qRJhasHbHDBH6odLp7YJ/jItZPEddJ25sn6EBTK3XdPUYg3XEBxr1ubqu4+xlstB3+k4K4jbQegNyuxyxIn8zvV7XUlLQ3XzQxNRGzpsJayx7ocv/kdrJas4UMHvevR8cPOS6BxzsBA5iekbaD0+stBHRQl4r41G84S7iNQleFkAqYYiSXAredj7g+RVBp1JSKochXfIeoRNkyZo8Anl+PEXZ7PdAy1qE9CEm9+aBUDLvzUe8YNI+1i65dVscffOdqfln5d1c1qE1FklImRp2BdbSFb1haxx+M0ufhOv5dej+ldeaDUjG8SQem1Jh3HCJwDJu9C0+FFQ1G6PMMQq9nIPiHEQxKxXA8Ku1+zm3QwCzGJ0k9HewsTrTe5PoVvW9nrz8XlIrhbGOL/RiPYRSBrfhd9HT+kcN9PL7JdgScOEhT+kY3nuLrp9ZbAErFCHzq138Uczsudy9ktFwRHQlFgyRpiym3Gwfx9vEurmcaqAZDfYLycYykjJWqxHh8SoZsZylHgkrdSCPkuZ7AtY4iHq/0XpCmWjR3pHKns5yvUyanPGIMpVoKbG88CS/63vMQ4FtotvG6/xMkNJ2BbfasycgVuJ7CMlVy6EDzRMViGvTO4OxijSUN4ppO84Q3sfmsmNXjcT6P6bnZfpQHaCrlPa9gOZ9boFxoIuYP3iTdKInwDfvdNB6PsmWCfbSVf596yJU0WC9ELqQRmwsot8G6n99HKi/7P4jORlY3GBaNGIFy6yx7oXq4Fo633eJ9ab1gQIe/kIpzgGQoUiwVDqmomkUXMVWgQ2JlmP5hGrZiIfj7bRHwT4ixUBgxKaYv1erQ+rNsDVq2PBuYP0u2vsu0vku1+nJtfNXMS7Q6SeaH0iXaSXD8IqkQixG+YkLOV0qHxIScXEhHJkOyOr5iRnMZ/AZ2sT2tRgY5lQAAAABJRU5ErkJggg==" InformativeScreenshot="9f2dc9a8fe15f94caf41c47a5c333732.png" ScopeSelectorArgument="&lt;html app='chrome.exe' title='네이버쇼핑' /&gt;" SearchSteps="FuzzySelector, Image">
+                  <uix:TargetAnchorable.Anchors>
+                    <scg:List x:TypeArguments="uix:ITarget" Capacity="1">
+                      <uix:Target DesignTimeRectangle="555, 142, 43, 14" ElementType="Text" FriendlyName="'상세검색'" FullSelectorArgument="&lt;webctrl parentid='_detailSearchButton' tag='SPAN' /&gt;" FuzzySelectorArgument="&lt;webctrl parentid='_detailSearchButton' tag='SPAN' type='' aaname='상세검색' check:text='상세검색' /&gt;" ImageBase64="iVBORw0KGgoAAAANSUhEUgAAAC8AAAASCAYAAADLw4ffAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAARxSURBVEhLzZbPbxtFFMf5t6Ahm8Q0TUNaC25AeuRQ6KUqqrg0SQuHoKIiqjY4xnbtOLEdBzuRd22HJHbq/GhD4rR2JSC2oKJSAtQcKiF6gMvjfd961rv2OvSC1JG+2p23s/bnvfnO7LzSm50mS4ZfpGW/FrX3+4xgF90RDeimPEa4TTOuekNXijbl7A9monRKn2XFXOUKbwdWQswdHHLCdybxP8JrOQZ+yeEHM3MO8K7wGt+fXg7xvc9KZGj5Do2XV+l0PiLAmh4gzeDEWBa8EaIz+RnR1XKBRvKzDBnmOCsdbEklpIfp2l6R3ltLW/CInc3HLPhBjg1yAt5snD7dK5E3l3TCK2ilsfK3hHb90UZHbHxvpQkcpOBBmQ6eNejj3VWOBSleq8iYG9VtuV4tF6k/FeAxf3QICZzNzcq4RK1KnlRIwHGPhoQ8eoTWDx9Tjcd/sntX4hdKeRoy4v8NP1ldp97FKan8eHlFYld2lklL+ySBeP2hxEaWQhzzW/CfVUpyHd9ZFXjEE/Wq6Pfnf9Jf//xNvbHbDvi+eb8D/tzagiSEPuCv3S9I/O3F1hpwgfdRrL4vAwtHP1HPwk2xkYJHAzQSsMO/W0x2he9n/2vJaRotpgRcVR9QaBZ8KkgPGr9K7Hpl04J/zu+oscfA++j9jbT8AYQ2Vd2k19O3rdkoHv1MY1z9nuQtC35sp5UYmhv8GfY/gPG7Exx3g/9oOy99jMEz72LEFV4tXgd84GBXXvzx2VMaXpqmzJPv5QXMhIJX4Kg8EkGbrJZ4ZtaoeGj27fCX7uXFLvhdWOaDLV0sg4XrXQzLOAB+uGlY0JcKGbnHLOAZYnbbuMJjgcIqAH81doNOJG9K5d9c8tOV78yqAB7gw/mw/AEakuhJTrna5vyGIVXGM+9S2AKH7J4HPGCRkDY3RedLWYm5wXexjV8sAnjMwn7jUGYBO4rOs/BVdYv9HXBYRn/yg1wv3su6wgNSWaZdgIKmK/ctz58rpHj7XLeEZ/O1R/T5wy3K/VLrDo9dBfAARlUxC7AM9BtPuQDxXo8tEg3gJ2JfMkhDnh8HjyY2aO46Iq4qGq5YnNjnVaxbA7xjq8RHSmTbEmP1B/Ra/AtRz8Itemc9IXFUHJZBAgDHLAzzRwk7TqLeDr/CC9ZPI7mo9AEM22hzprAgJc7AGlfe+kjl5uTZW2mlqFQfraPyCl7ZRlUeVkESMQbebxzJy5PVu+aCxdeVva+OB/aPlIKfaIPHgrXbBUKzw7cfD6CT34RfDB4aygdloSq/Q1iUsAyq3YJ2nm369SCDztBoISmzMFpcEHhslUjMbhe7JnbWaKBpGzu8ea4xYSMHFUn28vaKE14loOBN+WS3Ma3D9mDrqC3SCd6Cl3NM81CGRABu9iNyHMCHCuqbV+LDnizUkMB7MhEL/qShwE14nG8GEgHyzAe7w8P3neKDGKsTWqkT3qmIeRDrepqMstdZx8BLAm0nSwteEnAFh14M3g6sjsMK3p5AN/j2+PHwMfoXxLSeJJJuJosAAAAASUVORK5CYII=" SearchSteps="FuzzySelector, Image" />
+                    </scg:List>
+                  </uix:TargetAnchorable.Anchors>
+                </uix:TargetAnchorable>
+              </uix:NClick.Target>
+            </uix:NClick>
+            <uix:NCheckState Exists="{x:Null}" DisplayName="Check App State 'UL'" sap:VirtualizedContainerService.HintSize="1305,6352" sap2010:WorkflowViewState.IdRef="NCheckState_1" ScopeIdentifier="6a5c804e-2fbe-4e58-91f3-f132cdbd182c" Timeout="2" Version="V1">
+              <uix:NCheckState.IfExists>
+                <Sequence DisplayName="타겟이 나타남" sap:VirtualizedContainerService.HintSize="777.5,6134" sap2010:WorkflowViewState.IdRef="Sequence_14">
+                  <sap:WorkflowViewStateService.ViewState>
+                    <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                      <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                    </scg:Dictionary>
+                  </sap:WorkflowViewStateService.ViewState>
+                  <uix:NGetText DisplayName="Get Text '가격비교22'" sap:VirtualizedContainerService.HintSize="735.5,157" sap2010:WorkflowViewState.IdRef="NGetText_1" ScopeIdentifier="6a5c804e-2fbe-4e58-91f3-f132cdbd182c" Version="V1">
+                    <uix:NGetText.Target>
+                      <uix:TargetAnchorable BrowserURL="https://search.shopping.naver.com/search/all?query=%EB%B0%A4%EB%B6%80%EB%B2%A0%EB%B2%A0+%EC%88%9C%ED%95%9C%EB%8C%80%EB%82%98%EB%AC%B4+%ED%86%A1%ED%86%A1+%EB%AA%A9%EC%9A%95%ED%83%80%EC%98%AC_%EC%98%A8%EB%A7%88%EC%9D%84&amp;cat_id=&amp;frm=NVSHATC" DesignTimeRectangle="700, 770, 311, 36" ElementType="Text" FriendlyName="'22'" FullSelectorArgument="&lt;webctrl aaname='22' parentid='__next' tag='SPAN' /&gt;" FuzzySelectorArgument="&lt;webctrl parentid='__next' tag='SPAN' type='' /&gt;" Guid="44dcc486-0254-4e47-91f9-8c22c73df9e9" ImageBase64="" InformativeScreenshot="60479521efb5ad97f4c0341a5ea807b9.png" ScopeSelectorArgument="&lt;html app='chrome.exe' title='밤부베베 순한대나무 톡톡 목욕타올_온마을 : 네이버 쇼핑' /&gt;" SearchSteps="FuzzySelector" WaitForReadyArgument="Interactive">
+                        <uix:TargetAnchorable.Anchors>
+                          <scg:List x:TypeArguments="uix:ITarget" Capacity="1">
+                            <uix:Target DesignTimeRectangle="698, 710, 313, 112" ElementType="Text" FriendlyName="'가격비교22'" FullSelectorArgument="&lt;webctrl aaname='가격비교*' aria-role='button' tag='A' /&gt;" FuzzySelectorArgument="&lt;webctrl aaname='가격비교*' aria-role='button' tag='A' type='' check:text='가격비교22' /&gt;" ImageBase64="iVBORw0KGgoAAAANSUhEUgAAAKAAAAA8CAYAAADha7EVAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAIWSURBVHhe7djBTcMwGIZhRuqFM+MUzrADWaBIXLi0EgvQERBw6QRVZwAxwE9TkuC4dh03qJ+avJEeKXbsgJRXluDi8vLKABUChNSFVddqtbLPr2/gZMrmCBAyBAgpAoQUAUKKACFFgJAiQEgRIKQIEFIECCkChBQBQooAIUWAkCLAxpvdTyY2mRT22hr7/Of1OCV3/TiMKMC+QeXuT40PvdMV+32GYcQnYJdAXKn1ueOU3PXniQA7BRJ6ltqf8/6Q3PXniQCTgbjz9b3L35967r8/Jnf9eRppgKGP6wd0Z7fNfSgC/x2545o7X91Pn20TXT8sBHhwLoe/PzUO7avuCXDIuoTgzx1Sr/f3p8Y1d766n97YdXDt8IwowPpDxz5sLJAYf737fpf/3H+/O1/d705Ad81wjfAEjIkFEtN3fT3uouvPOD8E2Dh1gCgRIKQIEFIECCkChBQBQooAIUWAkCJASBEgpAjwKB82LworKrPlZju3sZfZ31yx+PD2IIQAj/C+qKPbjtdLm22De5o/ONH9BtqsQRQB9vZ78s3f2vOtSBFFgH3tTsCFvbfmyxPwwV7W7hxCCLCXUGjhExFhBHgsTr5/QYDHKOObLW3dmi/j84NECgFm8/7dUnl83J/jj5A0AoQUAUKKACFFgJAiQEgRIKQIEFIECCkChBQBQooAIUWAkNoLEDi1JkAuLsVFgFzCy+wHNba748Q6Xu0AAAAASUVORK5CYII=" SearchSteps="Selector, FuzzySelector, Image" />
+                          </scg:List>
+                        </uix:TargetAnchorable.Anchors>
+                      </uix:TargetAnchorable>
+                    </uix:NGetText.Target>
+                    <uix:NGetText.Text>
+                      <OutArgument x:TypeArguments="x:String">[price_diff_count]</OutArgument>
+                    </uix:NGetText.Text>
+                  </uix:NGetText>
+                  <ui:IfElseIf DisplayName="Else If" sap:VirtualizedContainerService.HintSize="735.5,5843" sap2010:WorkflowViewState.IdRef="IfElseIf_4">
+                    <ui:IfElseIf.ConditionBlocks>
+                      <sc:BindingList x:TypeArguments="ui:IfElseIfBlock" AllowEdit="True" AllowNew="True" AllowRemove="True" RaiseListChangedEvents="True">
+                        <ui:IfElseIfBlock BlockType="If" Condition="[Not string.IsNullOrEmpty(price_diff_count) AndAlso price_diff_count &lt;&gt; &quot;0&quot;]">
+                          <ui:IfElseIfBlock.Then>
+                            <Sequence DisplayName="Body" sap:VirtualizedContainerService.HintSize="642.5,2269" sap2010:WorkflowViewState.IdRef="Sequence_7">
+                              <Sequence.Variables>
+                                <Variable x:TypeArguments="scg:List(x:String)" Name="word_list" />
+                                <Variable x:TypeArguments="sd:DataTable" Name="dt_temp_result" />
+                                <Variable x:TypeArguments="x:String" Name="closest_product_name" />
+                                <Variable x:TypeArguments="sd:DataTable" Name="dt_sorted_result" />
+                              </Sequence.Variables>
+                              <sap:WorkflowViewStateService.ViewState>
+                                <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                  <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                  <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                                </scg:Dictionary>
+                              </sap:WorkflowViewStateService.ViewState>
+                              <uix:NClick ClickType="Single" DisplayName="Click '가격비교1선택됨'" sap:VirtualizedContainerService.HintSize="600.5,157" sap2010:WorkflowViewState.IdRef="NClick_2" KeyModifiers="None" MouseButton="Left" ScopeIdentifier="6a5c804e-2fbe-4e58-91f3-f132cdbd182c" Version="V1">
+                                <uix:NClick.Target>
+                                  <uix:TargetAnchorable BrowserURL="https://search.shopping.naver.com/search/all?frm=NVSHMDL&amp;origQuery=%EB%B0%A4%EB%B6%80%EB%B2%A0%EB%B2%A0%20%ED%86%A1%ED%86%A1%20%EA%B3%A0%EB%A6%AC%ED%83%80%EC%98%AC_%EC%98%A8%EB%A7%88%EC%9D%84%203%EC%9E%A5&amp;pagingIndex=1&amp;pagingSize=40&amp;productSet=model&amp;query=%EB%B0%A4%EB%B6%80%EB%B2%A0%EB%B2%A0%20%ED%86%A1%ED%86%A1%20%EA%B3%A0%EB%A6%AC%ED%83%80%EC%98%AC_%EC%98%A8%EB%A7%88%EC%9D%84%203%EC%9E%A5&amp;sort=rel&amp;timestamp=&amp;viewType=list" DesignTimeRectangle="225, 397, 156, 56" ElementType="Text" FriendlyName="'가격비교1선택됨'" FullSelectorArgument="&lt;webctrl aaname='가격비교*' aria-role='button' tag='A' /&gt;" FuzzySelectorArgument="&lt;webctrl aaname='가격비교*' aria-role='button' tag='A' type='' check:text='가격비교*' /&gt;" Guid="4aa5d506-167c-4f8c-a774-25cdebec193d" ImageBase64="iVBORw0KGgoAAAANSUhEUgAAAKAAAAA8CAYAAADha7EVAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAHjSURBVHhe7dUxTsMwAEbhHilLZwa4TZsdDtGhJ4GTVOIUZWAAKlQxGZLalWXFOHai/kryPsnIdpyAlKewWq/vDIOhGgTIkI7Vx+fJNONwOBjglprmCBAyBAgpAoQUAUKKACFFgJAiQEgRIKQIEFIECCkChBQBQooAIUWAkCLAq1ezqypTVbu/mb8OR3jdrVNyzy/DggIcGlTu/al1I/ZMf8T+nnlY8BewTyC+1PncdUru+WkiwF6BdF1L3Z/z/C6556eJAJOB+Ptu7o/w/tT18PkxueenaaEBdr3cMKBH83Sdd0UQPiN37fj7dr55Nu/R8/NCgHYnHkhf4f2ptePv2zkBzlmfEBy3999w58P7U2vH37fzzdZsO8/Oz4ICdC869mJjgcSE5/3n+yO8Hj7f37fz9gu4DAv8AsbEAokZet6t+4y+v2N6CPDq1gGiQYCQIkBIESCkCBBSBAgpAoQUAUKKACFFgJAiwJGc9/fmq34xP3aNfghwBG18DwRYggAHusRXm1NNgCUIcKDzvjbfb/wLLkWAIyHAMgQ4EgIsQ4AjIcAyBDgSAixDgJAiQEgRIKQIEFIECCkChBQBQooAIUWAkCJASBEgpAgQUm2AzY9mHI9Huw3cRhugnQMSBAghY34BWu1YaWXRi+cAAAAASUVORK5CYII=" InformativeScreenshot="2665c21fec5d146a3dbfd55d9e4471e7.png" ScopeSelectorArgument="&lt;html app='chrome.exe' title='밤부베베 톡톡 고리타올_온마을 3장 : 네이버 쇼핑' /&gt;" SearchSteps="FuzzySelector, Image">
+                                    <uix:TargetAnchorable.Anchors>
+                                      <scg:List x:TypeArguments="uix:ITarget" Capacity="1">
+                                        <uix:Target DesignTimeRectangle="69, 397, 156, 56" ElementType="Text" FriendlyName="'전체15'" FullSelectorArgument="&lt;webctrl aaname='전체*' aria-role='button' tag='A' /&gt;" FuzzySelectorArgument="&lt;webctrl aaname='전체*' aria-role='button' tag='A' type='' check:text='전체*' /&gt;" ImageBase64="iVBORw0KGgoAAAANSUhEUgAAAKAAAAA8CAYAAADha7EVAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAHWSURBVHhe7dhBTsJAGIZhj8SGtUdhiZ6EXgAvQKMXkBtogA0nIGzZajzAr1MobceZaW2x3+ad5EnodNi9+Uu5s581m81tOr0HRlcEmOfPwZvAfysC3O/39vH5BYzGNecWAUKCACFFgJAiQEgRIKQIEFIECCkChBQBQooAIUWAkCJASBEgpAgQUgQYtLHFZGKTqMzer2fc59B3mvuLN/88HAJsFQuna1AEmEKArerhlJ/rYvvNewQYRoBJqXgSe/MXO3p7BBhGgFF+MG3Xtb35oz0U9yoEGEaAQbFY6vupAJmAXRFgb35QsdAIMIUAeyPAWyDApK7RhKM7XxNgCgEm3SIaAkwhwKQympSuQRFgCAFCigAhRYCQIkBIESCkCBBSBAgpAoQUAUKKAAc52usys9Xmcr3JLcuyq+X66J2HjwB729nqEloZ4GH9ZFm+884hhQB7cZMvt+0lwjLAbc7U+ysCHKQeYDURz1yg/nn4CHCQ5gSsKx7Hy7UdvH00EeAg8QDPLyRMwTYEOIj/CK6Cc78HeSFpR4CDeBOw8TcM068LAoQUAUKKACFFgJAiQEgRIKQIEFIECCkChBQBQooAIUWAkPoVIDCm0+lUBchiqRYBsoTL7BvxSXIdGWLjzgAAAABJRU5ErkJggg==" SearchSteps="FuzzySelector, Image" />
+                                      </scg:List>
+                                    </uix:TargetAnchorable.Anchors>
+                                  </uix:TargetAnchorable>
+                                </uix:NClick.Target>
+                              </uix:NClick>
+                              <ui:MultipleAssign DisplayName="Multiple Assign" sap:VirtualizedContainerService.HintSize="600.5,100" sap2010:WorkflowViewState.IdRef="MultipleAssign_4">
+                                <ui:MultipleAssign.AssignOperations>
+                                  <scg:List x:TypeArguments="ui:AssignOperation" Capacity="4">
+                                    <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_5">
+                                      <ui:AssignOperation.To>
+                                        <OutArgument x:TypeArguments="scg:List(x:String)">[word_list]</OutArgument>
+                                      </ui:AssignOperation.To>
+                                      <ui:AssignOperation.Value>
+                                        <InArgument x:TypeArguments="scg:List(x:String)">[new List(of string)]</InArgument>
+                                      </ui:AssignOperation.Value>
+                                    </ui:AssignOperation>
+                                  </scg:List>
+                                </ui:MultipleAssign.AssignOperations>
+                              </ui:MultipleAssign>
+                              <uix:NExtractData sap2010:Annotation.AnnotationText="최처 표시가 있는 경우와 없는 경우가 섞인 경우 처리 " AppendResults="False" ContinueOnError="True" DataTable="[dt_temp_result]" DisplayName="Extract Table Data" ExtractDataSettings="&lt;Table xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance' xmlns:xsd='http://www.w3.org/2001/XMLSchema' Type='Structured'&gt;&#xA;&#x9;&lt;Column xsi:type='DataColumn' ReferenceName='Column0' Name='name'&gt;&#xA;&#x9;&#x9;&lt;IsExtra&gt;false&lt;/IsExtra&gt;&#xA;&#x9;&#x9;&lt;Format xsi:type='TextColumnFormat' /&gt;&#xA;&#x9;&lt;/Column&gt;&#xA;&#x9;&lt;Column xsi:type='DataColumn' ReferenceName='Column1' Name='price'&gt;&#xA;&#x9;&#x9;&lt;IsExtra&gt;false&lt;/IsExtra&gt;&#xA;&#x9;&#x9;&lt;Format xsi:type='NumberColumnFormat' DecimalSeparator='.' ThousandsSeparator=',' /&gt;&#xA;&#x9;&lt;/Column&gt;&#xA;&#x9;&lt;Column xsi:type='DataColumn' ReferenceName='Column3' Name='link'&gt;&#xA;&#x9;&#x9;&lt;IsExtra&gt;true&lt;/IsExtra&gt;&#xA;&#x9;&#x9;&lt;Format xsi:type='TextColumnFormat' /&gt;&#xA;&#x9;&lt;/Column&gt;&#xA;&#x9;&lt;Column xsi:type='DataColumn' ReferenceName='Column2' Name='새 열 2'&gt;&#xA;&#x9;&#x9;&lt;IsExtra&gt;false&lt;/IsExtra&gt;&#xA;&#x9;&#x9;&lt;Format xsi:type='TextColumnFormat' /&gt;&#xA;&#x9;&lt;/Column&gt;&#xA;&lt;/Table&gt;" ExtractMetadata="&lt;extract&gt;&lt;row exact='1'&gt;&lt;webctrl tag='div' /&gt;&lt;webctrl tag='li' idx='1' /&gt;&lt;webctrl tag='div' idx='1' /&gt;&lt;/row&gt;&lt;column exact='1' name='Column0' attr='text'&gt;&lt;webctrl tag='div' /&gt;&lt;webctrl tag='li' idx='1' /&gt;&lt;webctrl tag='div' idx='1' /&gt;&lt;webctrl tag='div' idx='2' /&gt;&lt;webctrl tag='div' idx='1' /&gt;&lt;/column&gt;&lt;column css-selector='.price_num__2WUXn' name='Column1' attr='text' /&gt;&lt;column exact='1' name='Column2' attr='text' name2='Column3' attr2='href'&gt;&lt;webctrl tag='div' /&gt;&lt;webctrl tag='li' idx='1' /&gt;&lt;webctrl tag='div' idx='1' /&gt;&lt;webctrl tag='div' idx='1' /&gt;&lt;webctrl tag='div' idx='1' /&gt;&lt;webctrl tag='a' idx='1' /&gt;&lt;/column&gt;&lt;/extract&gt;" ExtractSimilar="True" sap:VirtualizedContainerService.HintSize="600.5,188" sap2010:WorkflowViewState.IdRef="NExtractData_3" LimitExtractionTo="Rows" MaximumResults="0" ScopeIdentifier="6a5c804e-2fbe-4e58-91f3-f132cdbd182c" Version="V1">
+                                <uix:NExtractData.Target>
+                                  <uix:TargetAnchorable DesignTimeRectangle="212, 1002, 1880, 2043" FriendlyName="'담기내 블로그에'" FullSelectorArgument="&lt;webctrl css-selector='body&amp;gt;div&amp;gt;div&amp;gt;div&amp;gt;div&amp;gt;div&amp;gt;div&amp;gt;ul&amp;gt;div' parentid='__next' tag='DIV' /&gt;" Guid="01e3f4bc-e97a-4e0c-89da-445c571aa3ff" InformativeScreenshot="a849eec155e16f143544b7569bf6664b.png" ScopeSelectorArgument="&lt;html app='chrome.exe' title='* : 네이버 쇼핑' /&gt;" SearchSteps="Selector" Visibility="Interactive" />
+                                </uix:NExtractData.Target>
+                                <sap:WorkflowViewStateService.ViewState>
+                                  <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                    <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
+                                  </scg:Dictionary>
+                                </sap:WorkflowViewStateService.ViewState>
+                              </uix:NExtractData>
+                              <ui:ForEachRow ColumnNames="{x:Null}" CurrentIndex="{x:Null}" DataTable="[dt_temp_result]" DisplayName="For Each Row in Data Table" sap:VirtualizedContainerService.HintSize="600.5,229" sap2010:WorkflowViewState.IdRef="ForEachRow_1">
+                                <ui:ForEachRow.Body>
+                                  <ActivityAction x:TypeArguments="sd:DataRow">
+                                    <ActivityAction.Argument>
+                                      <DelegateInArgument x:TypeArguments="sd:DataRow" Name="CurrentRow" />
+                                    </ActivityAction.Argument>
+                                    <Sequence DisplayName="Body" sap:VirtualizedContainerService.HintSize="242,114" sap2010:WorkflowViewState.IdRef="Sequence_4">
+                                      <sap:WorkflowViewStateService.ViewState>
+                                        <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                          <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                        </scg:Dictionary>
+                                      </sap:WorkflowViewStateService.ViewState>
+                                      <AddToCollection x:TypeArguments="x:String" Collection="[word_list]" DisplayName="Add To Collection" sap:VirtualizedContainerService.HintSize="200,22" sap2010:WorkflowViewState.IdRef="AddToCollection`1_1" Item="[CurrentRow(&quot;name&quot;).ToString]" />
+                                    </Sequence>
+                                  </ActivityAction>
+                                </ui:ForEachRow.Body>
+                              </ui:ForEachRow>
+                              <d:Choose_Closest_Word sap2010:Annotation.AnnotationText="가장 유사한 이름 찾기 " ArrayofWords="[word_list.ToArray]" ClosestWord="[closest_product_name]" DisplayName="Choose Closest Word" sap:VirtualizedContainerService.HintSize="600.5,53" sap2010:WorkflowViewState.IdRef="Choose_Closest_Word_1" Word="[product_name]">
+                                <sap:WorkflowViewStateService.ViewState>
+                                  <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                    <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
+                                  </scg:Dictionary>
+                                </sap:WorkflowViewStateService.ViewState>
+                              </d:Choose_Closest_Word>
+                              <ui:SortDataTable ColumnIndex="{x:Null}" DataColumn="{x:Null}" ColumnName="price" DataTable="[dt_temp_result]" DisplayName="Sort Data Table" sap:VirtualizedContainerService.HintSize="600.5,242" sap2010:WorkflowViewState.IdRef="SortDataTable_1" Order="Ascending" OutputDataTable="[dt_sorted_result]" SortOrder="Ascending" />
+                              <ui:ForEachRow ColumnNames="{x:Null}" CurrentIndex="{x:Null}" DataTable="[dt_sorted_result]" DisplayName="For Each Row in Data Table" sap:VirtualizedContainerService.HintSize="600.5,719" sap2010:WorkflowViewState.IdRef="ForEachRow_2">
+                                <ui:ForEachRow.Body>
+                                  <ActivityAction x:TypeArguments="sd:DataRow">
+                                    <ActivityAction.Argument>
+                                      <DelegateInArgument x:TypeArguments="sd:DataRow" Name="CurrentRow" />
+                                    </ActivityAction.Argument>
+                                    <Sequence DisplayName="Body" sap:VirtualizedContainerService.HintSize="566.5,604" sap2010:WorkflowViewState.IdRef="Sequence_6">
+                                      <sap:WorkflowViewStateService.ViewState>
+                                        <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                          <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                        </scg:Dictionary>
+                                      </sap:WorkflowViewStateService.ViewState>
+                                      <ui:IfElseIf DisplayName="Else If" sap:VirtualizedContainerService.HintSize="524.5,512" sap2010:WorkflowViewState.IdRef="IfElseIf_2">
+                                        <ui:IfElseIf.ConditionBlocks>
+                                          <sc:BindingList x:TypeArguments="ui:IfElseIfBlock" AllowEdit="True" AllowNew="True" AllowRemove="True" RaiseListChangedEvents="True">
+                                            <ui:IfElseIfBlock BlockType="If" Condition="[CurrentRow(&quot;name&quot;).ToString = closest_product_name]">
+                                              <ui:IfElseIfBlock.Then>
+                                                <Sequence DisplayName="Body" sap:VirtualizedContainerService.HintSize="473.5,316" sap2010:WorkflowViewState.IdRef="Sequence_5">
+                                                  <sap:WorkflowViewStateService.ViewState>
+                                                    <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                                      <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                                    </scg:Dictionary>
+                                                  </sap:WorkflowViewStateService.ViewState>
+                                                  <ui:MultipleAssign DisplayName="Multiple Assign" sap:VirtualizedContainerService.HintSize="431.5,162" sap2010:WorkflowViewState.IdRef="MultipleAssign_5">
+                                                    <ui:MultipleAssign.AssignOperations>
+                                                      <scg:List x:TypeArguments="ui:AssignOperation" Capacity="4">
+                                                        <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_6">
+                                                          <ui:AssignOperation.To>
+                                                            <OutArgument x:TypeArguments="x:String">[out_Price]</OutArgument>
+                                                          </ui:AssignOperation.To>
+                                                          <ui:AssignOperation.Value>
+                                                            <InArgument x:TypeArguments="x:String">[CurrentRow("price").ToString]</InArgument>
+                                                          </ui:AssignOperation.Value>
+                                                        </ui:AssignOperation>
+                                                        <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_7">
+                                                          <ui:AssignOperation.To>
+                                                            <OutArgument x:TypeArguments="x:String">[out_Link]</OutArgument>
+                                                          </ui:AssignOperation.To>
+                                                          <ui:AssignOperation.Value>
+                                                            <InArgument x:TypeArguments="x:String">[CurrentRow("link").ToString]</InArgument>
+                                                          </ui:AssignOperation.Value>
+                                                        </ui:AssignOperation>
+                                                        <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_16">
+                                                          <ui:AssignOperation.To>
+                                                            <OutArgument x:TypeArguments="x:Int32">[io_Count]</OutArgument>
+                                                          </ui:AssignOperation.To>
+                                                          <ui:AssignOperation.Value>
+                                                            <InArgument x:TypeArguments="x:Int32">[io_Count + 1]</InArgument>
+                                                          </ui:AssignOperation.Value>
+                                                        </ui:AssignOperation>
+                                                      </scg:List>
+                                                    </ui:MultipleAssign.AssignOperations>
+                                                  </ui:MultipleAssign>
+                                                  <ui:Break sap:VirtualizedContainerService.HintSize="431.5,22" sap2010:WorkflowViewState.IdRef="Break_1" />
+                                                </Sequence>
+                                              </ui:IfElseIfBlock.Then>
+                                            </ui:IfElseIfBlock>
+                                          </sc:BindingList>
+                                        </ui:IfElseIf.ConditionBlocks>
+                                      </ui:IfElseIf>
+                                    </Sequence>
+                                  </ActivityAction>
+                                </ui:ForEachRow.Body>
+                              </ui:ForEachRow>
+                              <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="600.5,87" sap2010:WorkflowViewState.IdRef="LogMessage_1" Message="[string.Format(&quot;{0} / {1} 의 최저가: {2}&quot;, io_Count, product_name, out_price)]" />
+                              <uix:NNavigateBrowser DisplayName="Navigate Browser - 뒤로 이동" sap:VirtualizedContainerService.HintSize="600.5,82" sap2010:WorkflowViewState.IdRef="NNavigateBrowser_1" Version="V1" />
+                            </Sequence>
+                          </ui:IfElseIfBlock.Then>
+                        </ui:IfElseIfBlock>
+                        <ui:IfElseIfBlock BlockType="Else">
+                          <ui:IfElseIfBlock.Then>
+                            <Sequence DisplayName="Body" sap:VirtualizedContainerService.HintSize="684.5,3346" sap2010:WorkflowViewState.IdRef="Sequence_12">
+                              <sap:WorkflowViewStateService.ViewState>
+                                <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                  <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                  <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                                </scg:Dictionary>
+                              </sap:WorkflowViewStateService.ViewState>
+                              <uix:NClick ClickType="Single" DisplayName="Click '상품타입(전체)'" sap:VirtualizedContainerService.HintSize="642.5,157" sap2010:WorkflowViewState.IdRef="NClick_3" KeyModifiers="None" MouseButton="Left" ScopeIdentifier="6a5c804e-2fbe-4e58-91f3-f132cdbd182c" Version="V1">
+                                <uix:NClick.Target>
+                                  <uix:TargetAnchorable BrowserURL="https://search.shopping.naver.com/search/all?frm=NVSHMDL&amp;origQuery=%EB%A1%9C%EC%9F%88%EB%AC%B814K%20%EC%83%A4%20%EB%82%98%EC%9D%B4%ED%8A%B8%20%EA%B7%80%EA%B1%B8%EC%9D%B4_RM0153EARYG00F14K&amp;pagingIndex=1&amp;pagingSize=40&amp;productSet=model&amp;query=%EB%A1%9C%EC%9F%88%EB%AC%B814K%20%EC%83%A4%20%EB%82%98%EC%9D%B4%ED%8A%B8%20%EA%B7%80%EA%B1%B8%EC%9D%B4_RM0153EARYG00F14K&amp;sort=rel&amp;timestamp=&amp;viewType=list" DesignTimeRectangle="1761, 1006, 196, 52" ElementType="Text" FriendlyName="'상품타입(전체)'" FullSelectorArgument="&lt;webctrl aaname='상품타입(전체)' aria-role='button' tag='A' /&gt;" FuzzySelectorArgument="&lt;webctrl aaname='상품타입(전체)' aria-role='button' tag='A' type='' class='subFilter_btn_select__K6F79' check:innerText='상품타입(전체)' /&gt;" Guid="04a44208-f123-467d-8548-438e390b5e9e" ImageBase64="iVBORw0KGgoAAAANSUhEUgAAAMgAAAA4CAYAAAC4yreHAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAAHYcAAB2HAY/l8WUAAASASURBVHhe7dvLayJBEAfg/f/vgiB4ELwFhIV48hBY8CyEICzkFGEPgUAOgdx6p5zpbFN2PXpmOk42vw+K1e7qmoep9TX+CAAgQoMAKD4a5OHhAYFAdBGhQRCITEQXDQLwnaFBABRoEAAFGgRAgQYBUKBBABRoEAAFGgRAgQYBUKBBABRoEAAFGgRAgQYBUEyqQWazWXfra6i1v9c4D//TsYzpUxrEe5I8eZTTJ2qYYt30mKXIkcZL8Tpj1b2WL9cgNdB2PcHlxnJ4HWudNX922oXlbBl2p+6+wFWr4cmL+54Gx8dyOWdvh3DTzK33L93ANH3pBtHyS2qVbjey1tG8lGPN6R7DdjEL880xvHcjErtWy5tn4XW0ui/7dTO/Cr+eu4EJqt4gdIJqPUhafkmt0u1G1vatulKOte60WzY56+D5z9eqFXnzLLyOXvcUdsvmHNwcwls3MjWf0iDpv5o+D5K0pqRWn+0SbZ23Zi5PXfuyD+tmfr793Q3IqE4MiyfHg9ex6rbPIouwfewGJqZqg6QPTnpbYs2TWKc0NNa8RFvnrZnL09a2zx4L870HiXWkbfCQ5HJ5ROltwu9feG/fi9CziPVy8RqqN0iKn0wuzlt5Y+u7LW2d5xikHHld895j3qyZb5tburS2tJ2UNZ/ScvmcXfc9HG5o/3wvGSVPT0/h9vbWFYfDoVtlq9YgdGJyJ0caJ/bJrCPukxVcbiwlrSPWXNZpFxa0bnPfDeTlamvbI9ocV1LHU/fPHT0r0idar91IP54mKWkOMnqD0IHGkEjz2pqa+m43HkcaOd68SJp/Pb9en4XVnf6xj7Re27Y0npPmxppppPj9rOOmXfvTfl9l0ZqktDlIlQbpS1p7PnkjRY40bum7ziLVfdzOz3PSEwjNWfsk5VjrImsbfM5V9/kurKju6lcY41uRXJP0aQ4yeoMM4X2Qcq6xdsg2+zhu2j/OzbEbYD7jHMQ8KZ+Pu+p+NMhdGOsrkbRJ+jYHmVSDDOF9gHM8aymn14PfKN03Kd9qkCE8+0g5MU/K5+OeujUahFCTDGkO8ikNEk+sFKVyNbSw5NbwyJHGOW9eJOVbL7Gi0u0Raw3Npzn8fsTHcjkXRn6JNaaqDSKdRM6bF9XKLeWtHY+vJHKGvknXaGukfYrj6RzPy627MOKb9LFVaxDXiWG8a0pq99kPrxr7S8T8+DGv8aXa2MdcUo/netbGj3lvDtP7qhANMkCN/SVy/r8vCrX/a2ses4Vv296X17Bf07PQOgz8GqQKNMgANfaXaPntpSbzoF2KVfOYLXzb5r68tteWfdtLTTwPljcvivneqMVbm++PJ0Td7yi0P6hcPU/UYNX91hcrRvyB4FGqZE2f+l7e2qX7YOWXXO5+bfqxtL9r+daXu0MN3Q+mHJe8Txl+MAX1PG7DwvGT28l6uw+b+SysptwdDTQIgAINAqBAgwAo0CAACjQIgAINAqBAgwAo0CAACjQIgAINAqBAgwAo0CAACjQIgMJsEAQCgQZBINSIPhoEAC6hQQBEIfwFxV/RTzEasjsAAAAASUVORK5CYII=" InformativeScreenshot="e0f0b5bc7a3f68e3d09804372647b68b.png" ScopeSelectorArgument="&lt;html app='chrome.exe' title='로쟈문14K 샤 나이트 귀걸이_RM0153EARYG00F14K : 네이버 쇼핑' /&gt;" SearchSteps="Selector, FuzzySelector, Image" Visibility="Interactive" />
+                                </uix:NClick.Target>
+                              </uix:NClick>
+                              <uix:NClick ClickType="Single" DisplayName="Click '해외직구제외'" sap:VirtualizedContainerService.HintSize="642.5,157" sap2010:WorkflowViewState.IdRef="NClick_4" KeyModifiers="None" MouseButton="Left" ScopeIdentifier="6a5c804e-2fbe-4e58-91f3-f132cdbd182c" Version="V1">
+                                <uix:NClick.Target>
+                                  <uix:TargetAnchorable BrowserURL="https://search.shopping.naver.com/search/all?frm=NVSHMDL&amp;origQuery=%EB%A1%9C%EC%9F%88%EB%AC%B814K%20%EC%83%A4%20%EB%82%98%EC%9D%B4%ED%8A%B8%20%EA%B7%80%EA%B1%B8%EC%9D%B4_RM0153EARYG00F14K&amp;pagingIndex=1&amp;pagingSize=40&amp;productSet=model&amp;query=%EB%A1%9C%EC%9F%88%EB%AC%B814K%20%EC%83%A4%20%EB%82%98%EC%9D%B4%ED%8A%B8%20%EA%B7%80%EA%B1%B8%EC%9D%B4_RM0153EARYG00F14K&amp;sort=rel&amp;timestamp=&amp;viewType=list" DesignTimeRectangle="1773, 1148, 132, 40" ElementType="Text" FriendlyName="'해외직구제외'" FullSelectorArgument="&lt;webctrl aaname='해외직구제외' aria-role='button' tag='A' /&gt;" FuzzySelectorArgument="&lt;webctrl aaname='해외직구제외' aria-role='button' tag='A' type='' class='subFilter_select__1eEJS' check:innerText='해외직구제외' /&gt;" Guid="6214824c-b68f-4c10-94ac-14652022f39a" ImageBase64="iVBORw0KGgoAAAANSUhEUgAAAIgAAAAsCAYAAAC+N/CqAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAAHYcAAB2HAY/l8WUAAAJeSURBVHhe7ZaBiuQwDEPvr+fz5zBcwKe1VSVpp91BD8y2sawkRQz7520MwQExFAfEUBwQQ3FADMUBMRQHxFAcEENxQAzFATEUB8RQTg3I6/X693Quv833Ku74DlsBQeM7LhA9tZBqDUEPtc4Afc7yRZhvG5Bx0VwIrlWaiuyZq4P1KlT9rK+CcpejGuTnAN87sleuDtb7+C9Id9huPVB8M6p+1leB3aOCabGn+Hb7d+sB8/1oQI76QaVR5gahHXXEjK+KuveAabF35KvsW2nY3FcGJP9lzPiqzHoyPfaOvJW9Kw2b+y8gIVRqkJ8DfEeO+kGlUeaC0A1tfu5QfWeY9WR67J1xn0rD5r7mFyQ0qKvWMorvDEf7Vcyc78hb2bvSsLk2IDGUqwLXO12m8+vWgyPfo9mu382sMuuHZ8vveX2A7xXVXNCtB8y3DEi3AYJrbCMktFgdXU+ZDToNmxszZ1TH6HUaXGdeSGixOljvR0BmjMbGuWZRZlZ8FXZ8d88U88Oj88L1lT2VGabZDkhGOQyizKz4Xs3umfJ8PFd+uLaypzLDNF8VkNDN1iq7szjfrWXwXUGZYZpHBKSrQX4+kx3f1Vm8WwZ7qOvmGMOzqkF+Rj72T2r0qlJQdbPs+K7Ozsyhls1GryoFpisDEigb4Xqn2+WJvledKfOE79sGROEJF9hhx/eqM2We8H0dkEWuOlPmCd93KyDIHRfYYcf3qjMx7vgODsgiV52Jccd3ODUg5vtwQAzFATEUB8RQHBBDcUAMxQExFAfEUBwQQ3FADMUBMRQHxFAcEEN4v/8CQcivD3vU1r8AAAAASUVORK5CYII=" InformativeScreenshot="0110bed22e7a1d30889ba65abbb82c7c.png" ScopeSelectorArgument="&lt;html app='chrome.exe' title='로쟈문14K 샤 나이트 귀걸이_RM0153EARYG00F14K : 네이버 쇼핑' /&gt;" SearchSteps="Selector, FuzzySelector, Image" Visibility="Interactive" />
+                                </uix:NClick.Target>
+                              </uix:NClick>
+                              <uix:NClick ClickType="Single" DisplayName="Click '해외직구제외'" sap:VirtualizedContainerService.HintSize="642.5,157" sap2010:WorkflowViewState.IdRef="NClick_5" KeyModifiers="None" MouseButton="Left" ScopeIdentifier="6a5c804e-2fbe-4e58-91f3-f132cdbd182c" Version="V1">
+                                <uix:NClick.Target>
+                                  <uix:TargetAnchorable BrowserURL="https://search.shopping.naver.com/search/all?exagency=true&amp;frm=NVSHMDL&amp;origQuery=%ED%81%AC%EB%A6%AC%EC%8A%A4%EC%B1%A4%EB%AA%A8%EB%93%9C%20CM406%20%ED%83%84%EC%83%9D%EC%84%9D%20%EC%8B%9C%EA%B3%84%2024%EC%A2%85%20%ED%83%9D1&amp;pagingIndex=1&amp;pagingSize=40&amp;productSet=model&amp;query=%ED%81%AC%EB%A6%AC%EC%8A%A4%EC%B1%A4%EB%AA%A8%EB%93%9C%20CM406%20%ED%83%84%EC%83%9D%EC%84%9D%20%EC%8B%9C%EA%B3%84%2024%EC%A2%85%20%ED%83%9D1&amp;sort=rel&amp;timestamp=&amp;viewType=list" DesignTimeRectangle="1763, 1012, 196, 52" ElementType="Text" FriendlyName="'해외직구제외'" FullSelectorArgument="&lt;webctrl aaname='해외직구제외' aria-role='button' css-selector='body&amp;gt;div&amp;gt;div&amp;gt;div&amp;gt;div&amp;gt;div&amp;gt;div&amp;gt;div&amp;gt;div&amp;gt;div&amp;gt;div&amp;gt;a' tag='A' /&gt;" FuzzySelectorArgument="&lt;webctrl aaname='해외직구제외' aria-role='button' type='' tag='A' class='subFilter_btn_select__K6F79' check:innerText='해외직구제외' /&gt;" Guid="6311338e-1985-44a1-a1f7-9ceca7d4dde4" ImageBase64="iVBORw0KGgoAAAANSUhEUgAAAMgAAAA4CAYAAAC4yreHAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAAHYcAAB2HAY/l8WUAAAMHSURBVHhe7dNRjusgDIXhu//3LmX20ZeuoAvpyFIZWR5sDIQmzP0/yVJKjNOSnn8vAC4CAgR+AvJ4PCiKeldBQCiqUsWvgAD/MwICBAgIECAgQICAAAECAgQICBAgIECAgAABAgIECAgQICBAgIAAgUsF5Ha7va+OtdvcVTiHfqcGxB7sGS9Q7mXLqq1Zdka2jmDnHDXXWjX3CpYFpLxoXZZdq/XU6Jm6PNG9mmx/79yMzG9pVaGvhf3s0bN0eaJ7u1sWkAx7sJmD9l6Wty4yc7Vsf+/cjOh31ES99l5mrvd8b11k5u5qq4BkXkStp+cFSm+plp65WdlnF1Gvvdeam3lurSezb1cExCi9o8+a1Tsz6rf3WrMzz671ZPbt6tCAyEFlqtDXwn62WvdFrSezT0hf6dXXnuzcHr0zo35774jfU+vJ7NvVoQHpdaUXKD22r7amZeb2aD2vpuf7tWZnnl3ryexb7fl8vr6+vlJ1v9/fu9qWBUQOTVeNXff6NG+ety5ac1t7vfvenlG98+x305/1emE/19T2CW9dZOZ+QiYkPeEQSwLiHbBl13oOWnptebx7mb3C64n2lT1HlKfc83rsejTLkl5bnujep0Uh6Q2HODwgPQdZDl5Xr8yekbkZM3Nnv5PsLzO8WXZ95JmZPSNzV6qFZCQc4vSAaCMHndkzMne12e+k98t1bZ5dG3lmZs/I3NV0SEbDIQiIIn29NWp2r93vrWn2c0Zmz8jcT5CQzIRD/ImAeFXo6yPNzB3da3+bZu/ZPm9fpMysVaGv/5rDAyJqB5ZZiw5a7tUqI9vXa2bu6N6efbY32iv3apWR7dvRkoCIzEHbda9v1hXnrvpO2u7newXLApKx+wucmfuJP9Xu53sFBGTCzNxP/Kl2P98rODUg1m4vcGbuGX+q3c73CgjIhJm5Z/ypdjvfK7hUQICrISBAgIAAAQICBAgIECAgQICAAAECAgQICBAgIECAgAABAgIECAgQICBAgIAAgWZAKIoiIBQVVvETEAC/ERDA9Xp9A9gsbic9PpJUAAAAAElFTkSuQmCC" InformativeScreenshot="7b9c603d389fdd148471b54e89478267.png" ScopeSelectorArgument="&lt;html app='chrome.exe' title='크리스챤모드 CM406 탄생석 시계 24종 택1 : 네이버 쇼핑' /&gt;" SearchSteps="FuzzySelector, Image" Visibility="Interactive">
+                                    <uix:TargetAnchorable.Anchors>
+                                      <scg:List x:TypeArguments="uix:ITarget" Capacity="1">
+                                        <uix:Target DesignTimeRectangle="1619, 1012, 130, 52" ElementType="Text" FriendlyName="'쇼핑몰선택'" FullSelectorArgument="&lt;webctrl aaname='쇼핑몰선택' aria-role='button' tag='A' /&gt;" FuzzySelectorArgument="&lt;webctrl aaname='쇼핑몰선택' aria-role='button' tag='A' type='' class='subFilter_btn_mall__2HDL4' check:innerText='쇼핑몰선택' /&gt;" ImageBase64="iVBORw0KGgoAAAANSUhEUgAAAIYAAAA4CAYAAAA4uYCUAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAAHYcAAB2HAY/l8WUAAAJiSURBVHhe7dYBihsxDIXh3jonySFyl9wpRbBijftsS/bYk8L/gSCZkTXK7KP0zwcQCAYkggGJYEAiGJAIBiSCAYlgQCIYkAgGJIIBiWBAIhiQCAYkggGJYEAiGJC+PhjP5/Pn0/9jx86n38NUMGaXtHPRcuXnkXrGqHbpza53KKs0+r5bOhjqR+yUedauXhc90+ubnTGz74rjweidV9czz9rV66Jnen2zM2b2XZEKhi1X1qzWWXU985xdvS56ptc3O2Nm3xXpYLiVRdVZu9a6HrWr17T2M36vrBbVa1Wrr6mencLBiCwf1Zq1+gyfEa2MzLleT/S55fO8TgoFo7fUzNKqvzUjO7u2et7YDJ8Tmdfrie7jzyzrpG4wogtlF1e9fs1nld9XXHG+nFF/V3r3o2frvtG5lvf7/Xk8HqF6vV4/pxrBsCW8okZnyvuRcuXnWn1mpZTWvd4ZM7o3Ku8r1d8zIuEoQ2GawZi1cla5el6UPbf3bL+venrnouoZqzN74ahDYS75P8ZOu+e3rDz3rp1HVDhUKMzXBMPmeM0qZ0Rql52zV5XhaIXC3BYM/+OMapfM7OwekX7/fZm6ioWjFwpzSzAyPzTTm5GZmX3+3fte4XgwrH/mTITPjlZUpneX0zv8E4zyxa1Uy+i+Eu3Pzo3aNTfj9A6hfzGulvmR1hvt3/XyTv9RlNM73BYMr5ZIT608E60IdS5SV7p63sgtwXD1i6wLv06/j1uDge9FMCARDEgEAxLBgEQwIBEMSAQDEsGARDAgEQxIBAMSwYBEMCARDEgEAxLBgEQwIBEMCJ/PXwqvvrciOkV9AAAAAElFTkSuQmCC" SearchSteps="FuzzySelector, Image" />
+                                      </scg:List>
+                                    </uix:TargetAnchorable.Anchors>
+                                  </uix:TargetAnchorable>
+                                </uix:NClick.Target>
+                              </uix:NClick>
+                              <uix:NClick ClickType="Single" DisplayName="Click '중고제외'" sap:VirtualizedContainerService.HintSize="642.5,157" sap2010:WorkflowViewState.IdRef="NClick_6" KeyModifiers="None" MouseButton="Left" ScopeIdentifier="6a5c804e-2fbe-4e58-91f3-f132cdbd182c" Version="V1">
+                                <uix:NClick.Target>
+                                  <uix:TargetAnchorable BrowserURL="https://search.shopping.naver.com/search/all?frm=NVSHMDL&amp;origQuery=%EB%A1%9C%EC%9F%88%EB%AC%B814K%20%EC%83%A4%20%EB%82%98%EC%9D%B4%ED%8A%B8%20%EA%B7%80%EA%B1%B8%EC%9D%B4_RM0153EARYG00F14K&amp;pagingIndex=1&amp;pagingSize=40&amp;productSet=model&amp;query=%EB%A1%9C%EC%9F%88%EB%AC%B814K%20%EC%83%A4%20%EB%82%98%EC%9D%B4%ED%8A%B8%20%EA%B7%80%EA%B1%B8%EC%9D%B4_RM0153EARYG00F14K&amp;sort=rel&amp;timestamp=&amp;viewType=list" DesignTimeRectangle="1773, 1228, 88, 40" ElementType="Text" FriendlyName="'중고제외'" FullSelectorArgument="&lt;webctrl aaname='중고제외' aria-role='button' tag='A' /&gt;" FuzzySelectorArgument="&lt;webctrl aaname='중고제외' aria-role='button' tag='A' type='' class='subFilter_select__1eEJS' check:innerText='중고제외' /&gt;" Guid="cd3fb97b-c0f7-460a-a38f-8715c3d84bd7" ImageBase64="iVBORw0KGgoAAAANSUhEUgAAAFwAAAAsCAYAAADozd+ZAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAAHYcAAB2HAY/l8WUAAAG+SURBVHhe7ZWBisMwDEPvr/v5HYYLBJ2tOE2j6zY/MLSJpGRibD9nIaUKF1OFi6nCxVThYqpwMVW4mCpcTBUupgoXU4WL+erCj+P4fboXlhsWbqYr82Twfrvuy3Knv+GrlzT/lYnwtDiN/tnA94g+q58ItjdVeOawHcycx7S4l8k1jaeL1g2Wmy68P4AdtoOZs5gW90a5mXM9DfMNCzdzm55ofQczZzAt7o1yM+d6Gub7U7iJcSJmtCvM5DIt7o1yM+d6GuZzv+GZgzyu+kbM5DIt7o1yM+d6Guab+tPcxR0f3DBdG3zv1xv47uH5jGjdYLmpn5QrM8NIn81rukiP69lcw7Q4EWxv+hvOwq5y9fI9pmvayIPr2eyejIdpPqrwhj17PlzLZvdkPEzzFr/hI8yPGdFaD75nyHiYJlW4BYxmhRU/Ox/3UBf5GC3Tm0b/jNDCMSgiq4tQeVHLvLbnTQamCwvPhvcwT7vw6qyA/tW8CJYrK/wJPLpww4yZS2V1/w3ecdedWe4tf5rvyq67s9xU4Z9KFf4FVOFiqnAxVbiYKlxMFS6mChdThYupwsVU4WKqcDFVuJgqXMp5vgD8kU4MW9FRFAAAAABJRU5ErkJggg==" InformativeScreenshot="7fb04ed0969eb0d27654516944264f79.png" ScopeSelectorArgument="&lt;html app='chrome.exe' title='로쟈문14K 샤 나이트 귀걸이_RM0153EARYG00F14K : 네이버 쇼핑' /&gt;" SearchSteps="Selector, FuzzySelector, Image" Visibility="Interactive" />
+                                </uix:NClick.Target>
+                              </uix:NClick>
+                              <uix:NClick ClickType="Single" DisplayName="Click '해외직구제외,중고제외'" sap:VirtualizedContainerService.HintSize="642.5,157" sap2010:WorkflowViewState.IdRef="NClick_7" KeyModifiers="None" MouseButton="Left" ScopeIdentifier="6a5c804e-2fbe-4e58-91f3-f132cdbd182c" Version="V1">
+                                <uix:NClick.Target>
+                                  <uix:TargetAnchorable BrowserURL="https://search.shopping.naver.com/search/all?exagency=true&amp;exused=true&amp;frm=NVSHMDL&amp;origQuery=%ED%81%AC%EB%A6%AC%EC%8A%A4%EC%B1%A4%EB%AA%A8%EB%93%9C%20CM406%20%ED%83%84%EC%83%9D%EC%84%9D%20%EC%8B%9C%EA%B3%84%2024%EC%A2%85%20%ED%83%9D1&amp;pagingIndex=1&amp;pagingSize=40&amp;productSet=model&amp;query=%ED%81%AC%EB%A6%AC%EC%8A%A4%EC%B1%A4%EB%AA%A8%EB%93%9C%20CM406%20%ED%83%84%EC%83%9D%EC%84%9D%20%EC%8B%9C%EA%B3%84%2024%EC%A2%85%20%ED%83%9D1&amp;sort=rel&amp;timestamp=&amp;viewType=list" DesignTimeRectangle="1763, 1012, 196, 52" ElementType="Text" FriendlyName="'해외직구제외,중고제외'" FullSelectorArgument="&lt;webctrl aaname='해외직구제외,중고제외' aria-role='button' tag='A' /&gt;" FuzzySelectorArgument="&lt;webctrl aaname='해외직구제외,중고제외' aria-role='button' tag='A' type='' class='subFilter_btn_select__K6F79' check:innerText='해외직구제외,중고제외' /&gt;" Guid="7ccc4e93-0b40-4183-8830-3b44dd3d910a" ImageBase64="iVBORw0KGgoAAAANSUhEUgAAAMgAAAA4CAYAAAC4yreHAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAAHYcAAB2HAY/l8WUAAALlSURBVHhe7dRBjvIwDIbh//77XqB3YM8R2HAClhyiI89PUGQS10ka2mbeR7IEiWM6hG/+LQCyCAhgeAfkfr9TFPWqgIBQVKKCj4AAfxkBAQwEBDAQEMBAQAADAQEMBAQwEBDAQEAAAwEBDAQEMBAQwEBAAMOhAjJN0+vVts42t5ezPe8R7BoQfWF7/JBlz1taak3TM7y1BT1nq7l/SbeAxJcdStNrqZ6UeGZcOdZeire/dK6H529ZqyB+LfR7rOsWEI+aC5SeVF9uXXjmxrz9pXM9rL8jxerVez2ed3SnCojnglM9JT8M6Q21pmSul/ezA6tX7/V43tERECX01n5Wq9KZVr/e6/G8o9s0IHIBngri10K/19b2RarHc05IX+iNX+d455YonWn1670ezzu6TQNSqvQCPRec6vGe032ptZhnbom1z0speb6tn/dIHo/HcrlcXHW73V6n1nULSLjsUCl6PdcXy83LrYu1uWtnc/u5M7VK5+lni9/H64F+PxpPSErCIboEJHURnrWSC5ReXTm5Pc9ZkeuxzoUzW1RO2Mv16HVr1iiskJSGQ2weEM+FBvJeVynPmZq5Hi1zW59JzocZuVl6vfUzzyIVkppwiN0DEqu5QM+Zmrm9tT5TfF5ep+bptdbPPJM4JLXhEAQkIn2lVav1rD6fW4vp96OTkLSEQwwRkFwF8esttcytPav/tpje0325c8jbPCAidRGeNesCZS9VHt6+Ui1za8+WnNO9vb6HkXUJiJDLiCtFr+f6Wh1xbq9nin3r+x1Zt4B4fOsCjzj3Gz/Wku/3eZ1/96f5ujxfa2/P6zLL3jQv18/N5Tr//yc4f26eHgFp0DK31zPFSr5fApK2a0C0Xj+aI87t9UyWPT7z7AhIAwIyvkMFBDgaAgIYCAhgICCAgYAABgICGAgIYCAggIGAAAYCAhgICGAgIICBgAAGAgIYCAhgWA0IRVEEhKLMCt4BAfCJgABZy/IDAXKqORqfNbkAAAAASUVORK5CYII=" InformativeScreenshot="4eb5bbf4cc00f52fde4b600749eb880a.png" ScopeSelectorArgument="&lt;html app='chrome.exe' title='크리스챤모드 CM406 탄생석 시계 24종 택1 : 네이버 쇼핑' /&gt;" SearchSteps="FuzzySelector, Image" Visibility="Interactive">
+                                    <uix:TargetAnchorable.Anchors>
+                                      <scg:List x:TypeArguments="uix:ITarget" Capacity="1">
+                                        <uix:Target DesignTimeRectangle="1619, 1012, 130, 52" ElementType="Text" FriendlyName="'쇼핑몰선택'" FullSelectorArgument="&lt;webctrl aaname='쇼핑몰선택' aria-role='button' tag='A' /&gt;" FuzzySelectorArgument="&lt;webctrl aaname='쇼핑몰선택' aria-role='button' tag='A' type='' class='subFilter_btn_mall__2HDL4' check:innerText='쇼핑몰선택' /&gt;" ImageBase64="iVBORw0KGgoAAAANSUhEUgAAAIYAAAA4CAYAAAA4uYCUAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAAHYcAAB2HAY/l8WUAAAJiSURBVHhe7dYBihsxDIXh3jonySFyl9wpRbBijftsS/bYk8L/gSCZkTXK7KP0zwcQCAYkggGJYEAiGJAIBiSCAYlgQCIYkAgGJIIBiWBAIhiQCAYkggGJYEAiGJC+PhjP5/Pn0/9jx86n38NUMGaXtHPRcuXnkXrGqHbpza53KKs0+r5bOhjqR+yUedauXhc90+ubnTGz74rjweidV9czz9rV66Jnen2zM2b2XZEKhi1X1qzWWXU985xdvS56ptc3O2Nm3xXpYLiVRdVZu9a6HrWr17T2M36vrBbVa1Wrr6mencLBiCwf1Zq1+gyfEa2MzLleT/S55fO8TgoFo7fUzNKqvzUjO7u2et7YDJ8Tmdfrie7jzyzrpG4wogtlF1e9fs1nld9XXHG+nFF/V3r3o2frvtG5lvf7/Xk8HqF6vV4/pxrBsCW8okZnyvuRcuXnWn1mpZTWvd4ZM7o3Ku8r1d8zIuEoQ2GawZi1cla5el6UPbf3bL+venrnouoZqzN74ahDYS75P8ZOu+e3rDz3rp1HVDhUKMzXBMPmeM0qZ0Rql52zV5XhaIXC3BYM/+OMapfM7OwekX7/fZm6ioWjFwpzSzAyPzTTm5GZmX3+3fte4XgwrH/mTITPjlZUpneX0zv8E4zyxa1Uy+i+Eu3Pzo3aNTfj9A6hfzGulvmR1hvt3/XyTv9RlNM73BYMr5ZIT608E60IdS5SV7p63sgtwXD1i6wLv06/j1uDge9FMCARDEgEAxLBgEQwIBEMSAQDEsGARDAgEQxIBAMSwYBEMCARDEgEAxLBgEQwIBEMCJ/PXwqvvrciOkV9AAAAAElFTkSuQmCC" SearchSteps="FuzzySelector, Image" />
+                                      </scg:List>
+                                    </uix:TargetAnchorable.Anchors>
+                                  </uix:TargetAnchorable>
+                                </uix:NClick.Target>
+                              </uix:NClick>
+                              <uix:NClick ClickType="Single" DisplayName="Click '렌탈제외'" sap:VirtualizedContainerService.HintSize="642.5,157" sap2010:WorkflowViewState.IdRef="NClick_8" KeyModifiers="None" MouseButton="Left" ScopeIdentifier="6a5c804e-2fbe-4e58-91f3-f132cdbd182c" Version="V1">
+                                <uix:NClick.Target>
+                                  <uix:TargetAnchorable BrowserURL="https://search.shopping.naver.com/search/all?frm=NVSHMDL&amp;origQuery=%EB%A1%9C%EC%9F%88%EB%AC%B814K%20%EC%83%A4%20%EB%82%98%EC%9D%B4%ED%8A%B8%20%EA%B7%80%EA%B1%B8%EC%9D%B4_RM0153EARYG00F14K&amp;pagingIndex=1&amp;pagingSize=40&amp;productSet=model&amp;query=%EB%A1%9C%EC%9F%88%EB%AC%B814K%20%EC%83%A4%20%EB%82%98%EC%9D%B4%ED%8A%B8%20%EA%B7%80%EA%B1%B8%EC%9D%B4_RM0153EARYG00F14K&amp;sort=rel&amp;timestamp=&amp;viewType=list" DesignTimeRectangle="1773, 1308, 88, 40" ElementType="Text" FriendlyName="'렌탈제외'" FullSelectorArgument="&lt;webctrl aaname='렌탈제외' aria-role='button' tag='A' /&gt;" FuzzySelectorArgument="&lt;webctrl aaname='렌탈제외' aria-role='button' tag='A' type='' class='subFilter_select__1eEJS' check:innerText='렌탈제외' /&gt;" Guid="fabb895d-65fd-4eaa-b1ed-a09e2307d329" ImageBase64="iVBORw0KGgoAAAANSUhEUgAAAFwAAAAsCAYAAADozd+ZAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAAHYcAAB2HAY/l8WUAAAHGSURBVHhe7ZWBisMwDEP31/3Sfk8PwwWMZytO26nsTg8MjS2rmRjb6xBUFDgZBU5GgZNR4GQUOBkFTkaBk1HgZBQ4GQVO5rbAt237fbqfT3k/4XspcG/cubxpZpVR9VeJPnf5RpDvW+Amririe9k80tFkoD2bzWrgn414rvBevirQrP0Nz0x8D71k0NFkrOwhbZx175zpqr6BfBU4oPPeTIP26IHPKqPqZyBtnM18O+/NNGjva37DY1WszJDWmM2NTIP20sARNvc1mO0ZHU3Gyh7SxtnMt/PeTIP2lgP3eO3Zy3Xo7pluVDz7/iCeM7I9o+obyPfRwO1clSeeK4au0p/1NUwbqwLNYODefJTHn+Msw/t09IMV7/GcEfsd30hnB2naf5oZvl9pWMS7ZPeJvTN37uwgzVvgK3jjlcubdrUQmabqeeK5Q2cHaWDgM3M/P3P5LsjbZtU8zqKu2kMMz6wG/jlyKXDPinYV5H3ljjPfrDog3W2Br+A/QLfuIPrc5RtBvo8F/gQKnMxXBL5aHbK9WX2CJ3xh4H8dBf4PUOBkFDgZBU5GgZNR4GQUOBkFTkaBk1HgZBQ4mde+74eKVwqcWvvxA5u2tt1y+GzKAAAAAElFTkSuQmCC" InformativeScreenshot="08e5122458127932de9ac7c6ac149429.png" ScopeSelectorArgument="&lt;html app='chrome.exe' title='로쟈문14K 샤 나이트 귀걸이_RM0153EARYG00F14K : 네이버 쇼핑' /&gt;" SearchSteps="Selector, FuzzySelector, Image" Visibility="Interactive" />
+                                </uix:NClick.Target>
+                              </uix:NClick>
+                              <Sequence DisplayName="Body" sap:VirtualizedContainerService.HintSize="642.5,2072" sap2010:WorkflowViewState.IdRef="Sequence_11">
+                                <Sequence.Variables>
+                                  <Variable x:TypeArguments="scg:List(x:String)" Name="word_list" />
+                                  <Variable x:TypeArguments="sd:DataTable" Name="dt_temp_result" />
+                                  <Variable x:TypeArguments="x:String" Name="closest_product_name" />
+                                  <Variable x:TypeArguments="sd:DataTable" Name="dt_sorted_result" />
+                                </Sequence.Variables>
+                                <sap:WorkflowViewStateService.ViewState>
+                                  <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                    <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                    <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                                  </scg:Dictionary>
+                                </sap:WorkflowViewStateService.ViewState>
+                                <ui:MultipleAssign DisplayName="Multiple Assign" sap:VirtualizedContainerService.HintSize="600.5,100" sap2010:WorkflowViewState.IdRef="MultipleAssign_6">
+                                  <ui:MultipleAssign.AssignOperations>
+                                    <scg:List x:TypeArguments="ui:AssignOperation" Capacity="4">
+                                      <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_8">
+                                        <ui:AssignOperation.To>
+                                          <OutArgument x:TypeArguments="scg:List(x:String)">[word_list]</OutArgument>
+                                        </ui:AssignOperation.To>
+                                        <ui:AssignOperation.Value>
+                                          <InArgument x:TypeArguments="scg:List(x:String)">[new List(of string)]</InArgument>
+                                        </ui:AssignOperation.Value>
+                                      </ui:AssignOperation>
+                                    </scg:List>
+                                  </ui:MultipleAssign.AssignOperations>
+                                </ui:MultipleAssign>
+                                <uix:NExtractData sap2010:Annotation.AnnotationText="최처 표시가 있는 경우와 없는 경우가 섞인 경우 처리 " AppendResults="False" ContinueOnError="True" DataTable="[dt_temp_result]" DisplayName="Extract Table Data" ExtractDataSettings="&lt;Table xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance' xmlns:xsd='http://www.w3.org/2001/XMLSchema' Type='Structured'&gt;&#xA;&#x9;&lt;Column xsi:type='DataColumn' ReferenceName='Column0' Name='name'&gt;&#xA;&#x9;&#x9;&lt;IsExtra&gt;false&lt;/IsExtra&gt;&#xA;&#x9;&#x9;&lt;Format xsi:type='TextColumnFormat' /&gt;&#xA;&#x9;&lt;/Column&gt;&#xA;&#x9;&lt;Column xsi:type='DataColumn' ReferenceName='Column1' Name='price'&gt;&#xA;&#x9;&#x9;&lt;IsExtra&gt;false&lt;/IsExtra&gt;&#xA;&#x9;&#x9;&lt;Format xsi:type='NumberColumnFormat' DecimalSeparator='.' ThousandsSeparator=',' /&gt;&#xA;&#x9;&lt;/Column&gt;&#xA;&#x9;&lt;Column xsi:type='DataColumn' ReferenceName='Column3' Name='link'&gt;&#xA;&#x9;&#x9;&lt;IsExtra&gt;true&lt;/IsExtra&gt;&#xA;&#x9;&#x9;&lt;Format xsi:type='TextColumnFormat' /&gt;&#xA;&#x9;&lt;/Column&gt;&#xA;&#x9;&lt;Column xsi:type='DataColumn' ReferenceName='Column2' Name='새 열 2'&gt;&#xA;&#x9;&#x9;&lt;IsExtra&gt;false&lt;/IsExtra&gt;&#xA;&#x9;&#x9;&lt;Format xsi:type='TextColumnFormat' /&gt;&#xA;&#x9;&lt;/Column&gt;&#xA;&lt;/Table&gt;" ExtractMetadata="&lt;extract&gt;&lt;row exact='1'&gt;&lt;webctrl tag='div' /&gt;&lt;webctrl tag='li' idx='1' /&gt;&lt;webctrl tag='div' idx='1' /&gt;&lt;/row&gt;&lt;column exact='1' name='Column0' attr='text'&gt;&lt;webctrl tag='div' /&gt;&lt;webctrl tag='li' idx='1' /&gt;&lt;webctrl tag='div' idx='1' /&gt;&lt;webctrl tag='div' idx='2' /&gt;&lt;webctrl tag='div' idx='1' /&gt;&lt;/column&gt;&lt;column css-selector='.price_num__2WUXn' name='Column1' attr='text' /&gt;&lt;column exact='1' name='Column2' attr='text' name2='Column3' attr2='href'&gt;&lt;webctrl tag='div' /&gt;&lt;webctrl tag='li' idx='1' /&gt;&lt;webctrl tag='div' idx='1' /&gt;&lt;webctrl tag='div' idx='1' /&gt;&lt;webctrl tag='div' idx='1' /&gt;&lt;webctrl tag='a' idx='1' /&gt;&lt;/column&gt;&lt;/extract&gt;" ExtractSimilar="True" sap:VirtualizedContainerService.HintSize="600.5,188" sap2010:WorkflowViewState.IdRef="NExtractData_4" LimitExtractionTo="Rows" MaximumResults="0" ScopeIdentifier="6a5c804e-2fbe-4e58-91f3-f132cdbd182c" Version="V1">
+                                  <uix:NExtractData.Target>
+                                    <uix:TargetAnchorable DesignTimeRectangle="212, 1002, 1880, 2043" FriendlyName="'담기내 블로그에'" FullSelectorArgument="&lt;webctrl css-selector='body&amp;gt;div&amp;gt;div&amp;gt;div&amp;gt;div&amp;gt;div&amp;gt;div&amp;gt;ul&amp;gt;div' parentid='__next' tag='DIV' /&gt;" Guid="01e3f4bc-e97a-4e0c-89da-445c571aa3ff" InformativeScreenshot="a849eec155e16f143544b7569bf6664b.png" ScopeSelectorArgument="&lt;html app='chrome.exe' title='* : 네이버 쇼핑' /&gt;" SearchSteps="Selector" Visibility="Interactive" />
+                                  </uix:NExtractData.Target>
+                                  <sap:WorkflowViewStateService.ViewState>
+                                    <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                      <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
+                                    </scg:Dictionary>
+                                  </sap:WorkflowViewStateService.ViewState>
+                                </uix:NExtractData>
+                                <ui:ForEachRow ColumnNames="{x:Null}" CurrentIndex="{x:Null}" DataTable="[dt_temp_result]" DisplayName="For Each Row in Data Table" sap:VirtualizedContainerService.HintSize="600.5,229" sap2010:WorkflowViewState.IdRef="ForEachRow_3">
+                                  <ui:ForEachRow.Body>
+                                    <ActivityAction x:TypeArguments="sd:DataRow">
+                                      <ActivityAction.Argument>
+                                        <DelegateInArgument x:TypeArguments="sd:DataRow" Name="CurrentRow" />
+                                      </ActivityAction.Argument>
+                                      <Sequence DisplayName="Body" sap:VirtualizedContainerService.HintSize="242,114" sap2010:WorkflowViewState.IdRef="Sequence_8">
+                                        <sap:WorkflowViewStateService.ViewState>
+                                          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                          </scg:Dictionary>
+                                        </sap:WorkflowViewStateService.ViewState>
+                                        <AddToCollection x:TypeArguments="x:String" Collection="[word_list]" DisplayName="Add To Collection" sap:VirtualizedContainerService.HintSize="200,22" sap2010:WorkflowViewState.IdRef="AddToCollection`1_2" Item="[CurrentRow(&quot;name&quot;).ToString]" />
+                                      </Sequence>
+                                    </ActivityAction>
+                                  </ui:ForEachRow.Body>
+                                </ui:ForEachRow>
+                                <d:Choose_Closest_Word sap2010:Annotation.AnnotationText="가장 유사한 이름 찾기 " ArrayofWords="[word_list.ToArray]" ClosestWord="[closest_product_name]" DisplayName="Choose Closest Word" sap:VirtualizedContainerService.HintSize="600.5,53" sap2010:WorkflowViewState.IdRef="Choose_Closest_Word_2" Word="[product_name]">
+                                  <sap:WorkflowViewStateService.ViewState>
+                                    <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                      <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
+                                    </scg:Dictionary>
+                                  </sap:WorkflowViewStateService.ViewState>
+                                </d:Choose_Closest_Word>
+                                <ui:SortDataTable ColumnIndex="{x:Null}" DataColumn="{x:Null}" ColumnName="price" DataTable="[dt_temp_result]" DisplayName="Sort Data Table" sap:VirtualizedContainerService.HintSize="600.5,242" sap2010:WorkflowViewState.IdRef="SortDataTable_2" Order="Ascending" OutputDataTable="[dt_sorted_result]" SortOrder="Ascending" />
+                                <ui:ForEachRow ColumnNames="{x:Null}" CurrentIndex="{x:Null}" DataTable="[dt_sorted_result]" DisplayName="For Each Row in Data Table" sap:VirtualizedContainerService.HintSize="600.5,719" sap2010:WorkflowViewState.IdRef="ForEachRow_4">
+                                  <ui:ForEachRow.Body>
+                                    <ActivityAction x:TypeArguments="sd:DataRow">
+                                      <ActivityAction.Argument>
+                                        <DelegateInArgument x:TypeArguments="sd:DataRow" Name="CurrentRow" />
+                                      </ActivityAction.Argument>
+                                      <Sequence DisplayName="Body" sap:VirtualizedContainerService.HintSize="566.5,604" sap2010:WorkflowViewState.IdRef="Sequence_10">
+                                        <sap:WorkflowViewStateService.ViewState>
+                                          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                          </scg:Dictionary>
+                                        </sap:WorkflowViewStateService.ViewState>
+                                        <ui:IfElseIf DisplayName="Else If" sap:VirtualizedContainerService.HintSize="524.5,512" sap2010:WorkflowViewState.IdRef="IfElseIf_3">
+                                          <ui:IfElseIf.ConditionBlocks>
+                                            <sc:BindingList x:TypeArguments="ui:IfElseIfBlock" AllowEdit="True" AllowNew="True" AllowRemove="True" RaiseListChangedEvents="True">
+                                              <ui:IfElseIfBlock BlockType="If" Condition="[CurrentRow(&quot;name&quot;).ToString = closest_product_name]">
+                                                <ui:IfElseIfBlock.Then>
+                                                  <Sequence DisplayName="Body" sap:VirtualizedContainerService.HintSize="473.5,316" sap2010:WorkflowViewState.IdRef="Sequence_9">
+                                                    <sap:WorkflowViewStateService.ViewState>
+                                                      <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                                        <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                                      </scg:Dictionary>
+                                                    </sap:WorkflowViewStateService.ViewState>
+                                                    <ui:MultipleAssign DisplayName="Multiple Assign" sap:VirtualizedContainerService.HintSize="431.5,162" sap2010:WorkflowViewState.IdRef="MultipleAssign_7">
+                                                      <ui:MultipleAssign.AssignOperations>
+                                                        <scg:List x:TypeArguments="ui:AssignOperation" Capacity="4">
+                                                          <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_9">
+                                                            <ui:AssignOperation.To>
+                                                              <OutArgument x:TypeArguments="x:String">[out_Price]</OutArgument>
+                                                            </ui:AssignOperation.To>
+                                                            <ui:AssignOperation.Value>
+                                                              <InArgument x:TypeArguments="x:String">[CurrentRow("price").ToString]</InArgument>
+                                                            </ui:AssignOperation.Value>
+                                                          </ui:AssignOperation>
+                                                          <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_10">
+                                                            <ui:AssignOperation.To>
+                                                              <OutArgument x:TypeArguments="x:String">[out_Link]</OutArgument>
+                                                            </ui:AssignOperation.To>
+                                                            <ui:AssignOperation.Value>
+                                                              <InArgument x:TypeArguments="x:String">[CurrentRow("link").ToString]</InArgument>
+                                                            </ui:AssignOperation.Value>
+                                                          </ui:AssignOperation>
+                                                          <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_17">
+                                                            <ui:AssignOperation.To>
+                                                              <OutArgument x:TypeArguments="x:Int32">[io_Count]</OutArgument>
+                                                            </ui:AssignOperation.To>
+                                                            <ui:AssignOperation.Value>
+                                                              <InArgument x:TypeArguments="x:Int32">[io_Count + 1]</InArgument>
+                                                            </ui:AssignOperation.Value>
+                                                          </ui:AssignOperation>
+                                                        </scg:List>
+                                                      </ui:MultipleAssign.AssignOperations>
+                                                    </ui:MultipleAssign>
+                                                    <ui:Break sap:VirtualizedContainerService.HintSize="431.5,22" sap2010:WorkflowViewState.IdRef="Break_2" />
+                                                  </Sequence>
+                                                </ui:IfElseIfBlock.Then>
+                                              </ui:IfElseIfBlock>
+                                            </sc:BindingList>
+                                          </ui:IfElseIf.ConditionBlocks>
+                                        </ui:IfElseIf>
+                                      </Sequence>
+                                    </ActivityAction>
+                                  </ui:ForEachRow.Body>
+                                </ui:ForEachRow>
+                                <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="600.5,87" sap2010:WorkflowViewState.IdRef="LogMessage_2" Message="[string.Format(&quot;{0} / {1} 의 최저가: {2}&quot;, io_Count, product_name, out_price)]" />
+                                <uix:NNavigateBrowser DisplayName="Navigate Browser - 뒤로 이동" sap:VirtualizedContainerService.HintSize="600.5,82" sap2010:WorkflowViewState.IdRef="NNavigateBrowser_2" Version="V1" />
+                              </Sequence>
+                            </Sequence>
+                          </ui:IfElseIfBlock.Then>
+                        </ui:IfElseIfBlock>
+                      </sc:BindingList>
+                    </ui:IfElseIf.ConditionBlocks>
+                    <sap:WorkflowViewStateService.ViewState>
+                      <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                        <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                        <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                      </scg:Dictionary>
+                    </sap:WorkflowViewStateService.ViewState>
+                  </ui:IfElseIf>
+                </Sequence>
+              </uix:NCheckState.IfExists>
+              <uix:NCheckState.IfNotExists>
+                <Sequence DisplayName="타겟이 나타나지 않음" sap:VirtualizedContainerService.HintSize="473.5,511" sap2010:WorkflowViewState.IdRef="Sequence_15">
+                  <sap:WorkflowViewStateService.ViewState>
+                    <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                      <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                    </scg:Dictionary>
+                  </sap:WorkflowViewStateService.ViewState>
+                  <ui:MultipleAssign DisplayName="Multiple Assign" sap:VirtualizedContainerService.HintSize="431.5,162" sap2010:WorkflowViewState.IdRef="MultipleAssign_8">
+                    <ui:MultipleAssign.AssignOperations>
+                      <scg:List x:TypeArguments="ui:AssignOperation" Capacity="4">
+                        <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_14">
+                          <ui:AssignOperation.To>
+                            <OutArgument x:TypeArguments="x:String">[out_Link]</OutArgument>
+                          </ui:AssignOperation.To>
+                          <ui:AssignOperation.Value>
+                            <InArgument x:TypeArguments="x:String">검색 결과가 없습니다.</InArgument>
+                          </ui:AssignOperation.Value>
+                        </ui:AssignOperation>
+                        <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_15">
+                          <ui:AssignOperation.To>
+                            <OutArgument x:TypeArguments="x:String">[out_Price]</OutArgument>
+                          </ui:AssignOperation.To>
+                          <ui:AssignOperation.Value>
+                            <InArgument x:TypeArguments="x:String">0</InArgument>
+                          </ui:AssignOperation.Value>
+                        </ui:AssignOperation>
+                        <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_18">
+                          <ui:AssignOperation.To>
+                            <OutArgument x:TypeArguments="x:Int32">[io_Count]</OutArgument>
+                          </ui:AssignOperation.To>
+                          <ui:AssignOperation.Value>
+                            <InArgument x:TypeArguments="x:Int32">[io_Count + 1]</InArgument>
+                          </ui:AssignOperation.Value>
+                        </ui:AssignOperation>
+                      </scg:List>
+                    </ui:MultipleAssign.AssignOperations>
+                  </ui:MultipleAssign>
+                  <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="431.5,93" sap2010:WorkflowViewState.IdRef="LogMessage_3" Message="[string.Format(&quot;{0} / {1}의 검색 결과 없음&quot;, io_Count, product_name)]" />
+                  <uix:NNavigateBrowser DisplayName="Navigate Browser - 뒤로 이동" sap:VirtualizedContainerService.HintSize="431.5,82" sap2010:WorkflowViewState.IdRef="NNavigateBrowser_3" Version="V1" />
+                </Sequence>
+              </uix:NCheckState.IfNotExists>
+              <uix:NCheckState.Target>
+                <uix:TargetAnchorable BrowserURL="https://search.shopping.naver.com/search/all?query=%EC%82%AC%EA%B3%BC%EB%82%98%EB%AC%B4&amp;frm=NVSHATC&amp;prevQuery=%EC%82%AC%EA%B3%BC%EB%82%98" DesignTimeRectangle="383, 956, 1880, 116" ElementType="List" FriendlyName="'UL'" FullSelectorArgument="&lt;webctrl css-selector='body&amp;gt;div&amp;gt;div&amp;gt;div&amp;gt;div&amp;gt;div&amp;gt;div&amp;gt;div&amp;gt;ul' parentid='__next' tag='UL' /&gt;" FuzzySelectorArgument="&lt;webctrl type='' parentid='__next' tag='UL' class='subFilter_seller_filter__3yvWP' aaname='' /&gt;" Guid="dc60dc44-5040-48a7-b405-d29604782fdb" ImageBase64="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" InformativeScreenshot="16af03a9a089477cd13b019819e1b802.png" ScopeSelectorArgument="&lt;html app='chrome.exe' title='사과나무 : 네이버 쇼핑' /&gt;" SearchSteps="Selector, FuzzySelector" Visibility="Interactive" />
+              </uix:NCheckState.Target>
+            </uix:NCheckState>
+          </Sequence>
+        </ActivityAction>
+      </uix:NApplicationCard.Body>
+      <uix:NApplicationCard.TargetApp>
+        <uix:TargetApp Area="438, 25, 1093, 835" BrowserType="Chrome" IconBase64="iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAB/SURBVEhLYxgFo4By4HFK4D8tMX0tcDvBhyJJDQy2AGQwCFMLoFjgcIgHzKCmBTAzQTTYAhgmF0y/XwnWD6JBANlMqlgAAsj6kc1ksD3A/R+GqQVAZsEtsNjFARYA0dQCyGaCLaAlBltgDsXIEuh8dExIHoZpb8EoGAUUAgYGAAuGGciusfAmAAAAAElFTkSuQmCC" InformativeScreenshot="40c4532662712603266fbbc0bfe336dc.png" Selector="&lt;html app='chrome.exe' title='네이버쇼핑'/&gt;" Url="https://shopping.naver.com/home/p/index.naver" />
+      </uix:NApplicationCard.TargetApp>
+    </uix:NApplicationCard>
+  </Sequence>
+</Activity>
